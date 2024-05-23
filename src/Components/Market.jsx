@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import Dropdown from './Dropdown';
 import { CryptoContext } from '../Api/CryptoContext'
 
-const Table = () => {
+const Market = () => {
   const { crypto } = useContext(CryptoContext);
 
   if (!crypto) return <p>Loading...</p>;
 
   return (
-    <div className="relative overflow-x-auto shadow-md p-6 sm:rounded-lg">
-      <div className="pb-4 bg-[#080c0e] mt-14">
+    <div className="relative overflow-x-auto shadow-md p-6 bg-[#080c0e]">
+      <div className="pb-4 bg-[#080c0e]">
         <label htmlFor="table-search" className="sr-only">Search</label>
         <div className="flex items-center">
           <div className="relative mt-1">
@@ -77,4 +77,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default Market;

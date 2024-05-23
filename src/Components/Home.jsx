@@ -1,4 +1,4 @@
-import { Header,Herocomponent,Table } from '../Exports'
+import { Header,Herocomponent,Market } from '../Exports'
 
 function Home() {
 
@@ -11,7 +11,7 @@ function Home() {
     <>
     <div style={styles}>
     <Herocomponent />
-    <Table />
+    <Market />
     </div>
     </>
   )

@@ -5,11 +5,17 @@ import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, Ro
 import { CryptoProvider } from './Api/CryptoContext.jsx';
 import Layout from './Layout/Layout.jsx';
 import Home from './Components/Home.jsx'
+import { Market } from './Exports.js';
+import {Trending} from './Exports.js';
+import {Dashboard} from './Exports.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
-      <Route index element={<Home />} />
+      <Route index path='/Home' element={<Home />} />
+      <Route path='/Market' element={<Market />} />
+      <Route path='/Trending' element={<Trending />} />
+      <Route path='/Dashboard' element={<Dashboard />} />
     </Route>
   )
 );

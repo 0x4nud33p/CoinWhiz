@@ -1,11 +1,15 @@
 import Header from './Components/Header';
-import Table from './Components/Table';
+import Market from './Components/Market';
 import Herocomponent from './Components/Herocomponent';
 import { Footer } from './Components/Footer';
+import Dashboard from './Components/Dashboard';
+import Trending from './Components/Trending';
 
 export {
   Header,
-  Table,
+  Market,
   Herocomponent,
-  Footer
+  Footer,
+  Trending,
+  Dashboard
 };

@@ -2,6 +2,9 @@ import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Market from './Market';
+import Dashboard from './Dashboard';
+import Trending from './Trending';
 
 const menuItems = [
   { name: 'Market' },
@@ -30,7 +33,7 @@ function Header() {
           <span>
             {/* logo goes here */}
           </span>
-          <Link to={'/'}>
+          <Link to={'/Home'}>
             <span className="font-bold text-xl text-[#68007a]">CoinWhiz</span>
           </Link>
         </div>
@@ -38,7 +41,7 @@ function Header() {
           <ul className="inline-flex ml-12 space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <Link to={'/'} className="inline-flex items-center text-sm font-semibold text-[#68007a] hover:text-[#68007b]">
+                <Link to={`/${item.name}`} className="inline-flex items-center text-sm font-semibold text-[#68007a] hover:text-[#68007b]">
                   <span className="ml-3 text-base font-medium text-[#68007a]">{item.name}</span>
                 </Link>
               </li>
@@ -80,7 +83,7 @@ function Header() {
                 <div className="mt-6">
                   <nav className="grid gap-y-4">
                     {menuItems.map((item) => (
-                      <Link to={'/'} className="flex items-center p-3 -m-3 text-sm font-semibold rounded-md hover:bg-[#080c0e]">
+                      <Link key={item.name} to={`/${item.name}`} className="flex items-center p-3 -m-3 text-sm font-semibold rounded-md hover:bg-[#080c0e]">
                         <span className="ml-3 text-base font-medium text-[#68007a]">{item.name}</span>
                       </Link>
                     ))}
