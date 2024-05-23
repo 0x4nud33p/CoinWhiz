@@ -31,7 +31,7 @@ function Header() {
             {/* logo goes here */}
           </span>
           <Link to={'/'}>
-            <span className="font-bold text-xl text-[#68007a]">CryptoWhiz</span>
+            <span className="font-bold text-xl text-[#68007a]">CoinWhiz</span>
           </Link>
         </div>
         <div className="items-start hidden grow lg:flex">

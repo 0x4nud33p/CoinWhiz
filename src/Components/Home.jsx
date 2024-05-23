@@ -1,7 +1,6 @@
-import './App.css'
-import { Header,Herocomponent,Table } from './Exports'
+import { Header,Herocomponent,Table } from '../Exports'
 
-function App() {
+function Home() {
 
   const styles = {
     backgroundColor: '#080c0e', 
@@ -11,7 +10,6 @@ function App() {
   return (
     <>
     <div style={styles}>
-    <Header />
     <Herocomponent />
     <Table />
     </div>
@@ -19,4 +17,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
