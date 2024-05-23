@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Table = () => {
-  const items = [
-    { id: 1, name: 'Apple MacBook Pro 17"', color: 'Silver', category: 'Laptop', price: '$2999' },
-    { id: 2, name: 'Microsoft Surface Pro', color: 'White', category: 'Laptop PC', price: '$1999' },
-    { id: 3, name: 'Magic Mouse 2', color: 'Black', category: 'Accessories', price: '$99' },
-    { id: 4, name: 'Apple Watch', color: 'Silver', category: 'Accessories', price: '$179' },
-    { id: 5, name: 'iPad', color: 'Gold', category: 'Tablet', price: '$699' },
-    { id: 6, name: 'Apple iMac 27"', color: 'Silver', category: 'PC Desktop', price: '$3999' },
-  ];
+  const [cryptos, setCryptos] = useState([]);
 
+  useEffect(() => {
+    const fetchCryptos = async () => {
+      try {
+        const currency = 'usd';
+        const data = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
+        const response = await data.json();
+        setCryptos(response);
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchCryptos(); 
+  }, []);
+  
   return (
     <div className="relative overflow-x-auto shadow-md p-6 sm:rounded-lg">
       <div className="pb-4 bg-[#080c0e] mt-14">
@@ -44,27 +53,29 @@ const Table = () => {
         <thead className="text-xs text-[#a564af] uppercase bg-[#080c0e] border-b border-[#68007a]">
           <tr>
             <th scope="col" className="p-4"> </th>
-            <th scope="col" className="px-6 py-3">Product name</th>
-            <th scope="col" className="px-6 py-3">Color</th>
-            <th scope="col" className="px-6 py-3">Category</th>
-            <th scope="col" className="px-6 py-3">Price</th>
+            <th scope="col" className="px-6 py-3">Image</th>
+            <th scope="col" className="px-6 py-3">Coin</th>
+            <th scope="col" className="px-6 py-3">Current Price</th>
+            <th scope="col" className="px-6 py-3">Market Cap</th>
+            <th scope="col" className="px-6 py-3">24hr High</th>
+            <th scope="col" className="px-6 py-3">24hr Low</th>
           </tr>
         </thead>
         <tbody>
-          {items.map(item => (
+          {cryptos.map(crypto => (
             <tr
-              key={item.id}
+              key={crypto.id}
               className="border-b bg-[#080c0e] border-[#68007a] hover:bg-[#551f5e]"
             >
               <td className="w-4 p-4">
                 <div className="flex items-center"></div>
               </td>
-              <th scope="row" className="px-6 py-4 font-medium text-[#a564af] whitespace-nowrap">
-                {item.name}
-              </th>
-              <td className="px-6 py-4">{item.color}</td>
-              <td className="px-6 py-4">{item.category}</td>
-              <td className="px-6 py-4">{item.price}</td>
+              <td className="px-6 py-4"><img src={crypto.image} alt={crypto.name} width="30" height="30" /></td> {/* Image column */}
+              <td className="px-6 py-4">{crypto.name}</td>
+              <td className="px-6 py-4">{crypto.current_price}</td>
+              <td className="px-6 py-4">{crypto.market_cap}</td>
+              <td className="px-6 py-4">{crypto.high_24h}</td>
+              <td className="px-6 py-4">{crypto.low_24h}</td>
             </tr>
           ))}
         </tbody>
