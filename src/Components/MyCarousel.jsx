@@ -7,23 +7,23 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const images = [
   {
     id: 1,
-    img: "https://ik.imagekit.io/tymm1oky9j/tinified/image1.jpg?updatedAt=1716009713908",
+    img: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
   },
   {
     id: 2,
-    img: "https://ik.imagekit.io/tymm1oky9j/tinified/image2.jpg?updatedAt=1716009713785",
+    img: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
   },
   {
     id: 3,
-    img: "https://ik.imagekit.io/tymm1oky9j/tinified/image4.jpg?updatedAt=1716009713719",
+    img: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
   },
   {
     id: 4,
-    img: "https://ik.imagekit.io/tymm1oky9j/tinified/image3.jpg?updatedAt=1716009713533",
+    img: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
   },
   {
     id: 5,
-    img: "https://ik.imagekit.io/tymm1oky9j/tinified/image5.jpg?updatedAt=1716009713544",
+    img: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function MyCarousel() {
     dots: false,
     infinite: true,
     speed: 2500,
-    slidesToShow: 3, 
+    slidesToShow: 5, 
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 500,
@@ -70,16 +70,16 @@ export default function MyCarousel() {
       <div className="relative mx-auto max-w-7xl">
         <Slider {...settings} className="overflow-hidden">
           {images.map((image) => (
-            <div key={image.id} className="relative h-[400px] w-[300px] rounded-md mx-2">
+            <div key={image.id} className="border border-[#68007a] relative h-[400px] w-[300px] rounded-md mx-2">
               <img
                 src={image.img}
                 alt="Image"
-                className="z-0 h-full w-full rounded-md object-cover"
+                className="z-0 h-1/2 w-full max-w-xs rounded-md object-contain"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
               <div className="absolute bottom-4 left-4 text-left">
-                <h1 className="text-lg font-semibold text-[#68007a]">Delba</h1>
-                <p className="mt-2 text-sm text-[#68007a]">
+                <h1 className="text-lg font-semibold text-[#68007a] text-center">Delba</h1>
+                <p className="mt-2 text-sm text-[#68007a]  bg-gradient-to-r items-center from-[#68007a] via-[#70217e] to-[#68007a] bg-clip-text font-extrabold text-transparent text-center select-auto">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, debitis?
                 </p>
                 <button className="mt-2 p-2 inline-flex cursor-pointer items-center text-sm hover:text-[#68007a] font-semibold text-[#68007a] border border-[#68007a]">

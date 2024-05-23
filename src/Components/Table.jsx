@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Dropdown from './Dropdown';
 
 const Table = () => {
   const [cryptos, setCryptos] = useState([]);
@@ -23,32 +24,35 @@ const Table = () => {
     <div className="relative overflow-x-auto shadow-md p-6 sm:rounded-lg">
       <div className="pb-4 bg-[#080c0e] mt-14">
         <label htmlFor="table-search" className="sr-only">Search</label>
-        <div className="relative mt-1">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-[#a564af]"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+        <div className="flex items-center">
+            <div className="relative mt-1">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-[#a564af]"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="table-search"
+                className="block pt-2 pl-10 text-sm text-[#a564af] border border-[#68007a] rounded-lg w-80 bg-[#080c0e] active:border-[#68007a]"
+                placeholder="Search"
               />
-            </svg>
+            </div>
+            <Dropdown />
           </div>
-          <input
-            type="text"
-            id="table-search"
-            className="block pt-2 pl-10 text-sm text-[#a564af] border border-[#68007a] rounded-lg w-80 bg-[#080c0e] active:border-[#68007a]"
-            placeholder="Search"
-          />
-        </div>
-      </div>
+          </div>
       <table className="w-full text-sm text-left text-[#a564af]">
         <thead className="text-xs text-[#a564af] uppercase bg-[#080c0e] border-b border-[#68007a]">
           <tr>
