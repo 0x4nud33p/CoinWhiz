@@ -33,7 +33,7 @@ export default function MyCarousel() {
     dots: false,
     infinite: true,
     speed: 2500,
-    slidesToShow: 5, 
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 500,
@@ -64,27 +64,38 @@ export default function MyCarousel() {
       },
     ],
   };
-  
+
   return (
     <div className="relative mx-auto max-w-7xl mt-5">
       <div className="relative mx-auto max-w-7xl">
         <Slider {...settings} className="overflow-hidden">
           {images.map((image) => (
-            <div key={image.id} className="border border-[#68007a] relative h-[400px] w-[300px] rounded-md mx-2">
-              <img
-                src={image.img}
-                alt="Image"
-                className="z-0 h-1/2 w-full max-w-xs rounded-md object-contain"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 text-left">
-                <h1 className="text-lg font-semibold text-[#68007a] text-center">Delba</h1>
-                <p className="mt-2 text-sm text-[#68007a]  bg-gradient-to-r items-center from-[#68007a] via-[#70217e] to-[#68007a] bg-clip-text font-extrabold text-transparent text-center select-auto">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, debitis?
-                </p>
-                <button className="mt-2 p-2 inline-flex cursor-pointer items-center text-sm hover:text-[#68007a] font-semibold text-[#68007a] border border-[#68007a]">
-                  Add to Watchlist
-                </button>
+            <div key={image.id} className="px-2"> {/* Added padding for gap */}
+              <div className="border border-[#68007a] relative h-[400px] w-[300px] rounded-md">
+                <img
+                  src={image.img}
+                  alt="Image"
+                  className="z-0 h-3/4 w-full max-w-xs rounded-md object-contain"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-left">
+                  <div className="flex items-center">
+                    <h1 className="text-sm text-[#68007a] bg-gradient-to-r from-[#68007a] via-[#70217e] to-[#68007a] bg-clip-text font-extrabold text-transparent text-center select-auto">
+                      Current Price
+                    </h1>
+                  </div>
+                  <div className="space-x-2 mt-2">
+                    <button
+                      type="button"
+                      className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium text-sm px-1 py-2 text-center"
+                    >
+                      +12%
+                    </button>
+                    <button className="p-2 inline-flex cursor-pointer items-center text-sm hover:text-[#68007a] font-semibold text-[#68007a] border border-[#68007a]">
+                      Add to Watchlist
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
