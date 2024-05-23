@@ -1,5 +1,5 @@
 import './App.css'
-import { Carousel, Header } from './Exports'
+import { Header,Herocomponent,Table } from './Exports'
 
 function App() {
 
@@ -12,7 +12,8 @@ function App() {
     <>
     <div style={styles}>
     <Header />
-    <Carousel />
+    <Herocomponent />
+    <Table />
     </div>
     </>
   )

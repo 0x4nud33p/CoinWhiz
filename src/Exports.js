@@ -1,7 +1,9 @@
 import Header from './Components/Header';
-import Carousel from './Components/Carousel';
+import Table from './Components/Table';
+import Herocomponent from './Components/Herocomponent';
 
 export {
   Header,
-  Carousel
+  Table,
+  Herocomponent
 };

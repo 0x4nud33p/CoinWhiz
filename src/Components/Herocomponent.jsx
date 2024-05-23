@@ -1,7 +1,9 @@
 import React from 'react'
+import MyCarousel from './MyCarousel'
 
-function Carousel() {
+function Herocomponent() {
   return (
+    <>
     <div className="hidden sm:block">
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-[#a564af] sm:text-6xl">
@@ -12,7 +14,11 @@ function Carousel() {
         </p>
       </div>
     </div>
+     <div>
+          <MyCarousel />
+     </div>
+    </>
   )
 }
 
-export default Carousel
+export default Herocomponent
