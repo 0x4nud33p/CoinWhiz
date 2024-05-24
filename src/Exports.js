@@ -4,6 +4,8 @@ import Herocomponent from './Components/Herocomponent';
 import { Footer } from './Components/Footer';
 import Dashboard from './Components/Dashboard';
 import Trending from './Components/Trending';
+import Signin from './Components/Signin';
+import Signup from './Components/Signup';
 
 export {
   Header,
@@ -11,5 +13,7 @@ export {
   Herocomponent,
   Footer,
   Trending,
-  Dashboard
+  Dashboard,
+  Signin,
+  Signup
 };

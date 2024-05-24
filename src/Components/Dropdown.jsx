@@ -19,7 +19,7 @@ const Dropdown = () => {
   }, [selected]);
 
   return (
-    <div className="relative inline-block ml-4 text-left">
+    <div className="relative inline-block ml-4 text-left font-mono">
       <div
         className="flex items-center justify-between px-4 py-2 text-[#68007a] border border-[#68007a] rounded-md shadow-sm cursor-pointer select-none"
         onClick={toggleDropdown}

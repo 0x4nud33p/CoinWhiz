@@ -26,7 +26,7 @@ function Trending() {
   const selectedNumber = parseInt(selected.split(' ')[1], 10);
 
   return (
-    <div className='bg-[#080c0e] text-center text-[#68007a]'>
+    <div className='bg-[#080c0e] text-center text-[#68007a] font-mono'>
       <div className="relative inline-block ml-4  bg-[#080c0e] text-center mb-6 text-[#68007a]">
         <div
           className="flex items-center justify-between px-4 py-2 text-[#68007a] border border-[#68007a] rounded-md shadow-sm cursor-pointer select-none"

@@ -4,7 +4,7 @@ import MyCarousel from './MyCarousel'
 function Herocomponent() {
   return (
     <>
-    <div className="hidden sm:block">
+    <div className="hidden sm:block font-mono">
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-[#a564af] sm:text-6xl">
           CoinWhiz

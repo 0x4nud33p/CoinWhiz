@@ -2,7 +2,7 @@ import React from 'react';
 
 export function Footer() {
   return (
-    <section className="relative overflow-hidden bg-[#0a0e0f] py-8">
+    <section className="relative overflow-hidden bg-[#080c0e]  py-8 font-mono">
       <div className="container relative z-10 mx-auto px-4">
         <div className="-m-8 flex flex-wrap items-center justify-between">
           <div className="w-auto p-8">

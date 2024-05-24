@@ -8,14 +8,14 @@ const Market = () => {
   if (!crypto) return <p>Loading...</p>;
 
   return (
-    <div className="relative overflow-x-auto shadow-md p-6 bg-[#080c0e]">
+    <div className="relative overflow-x-auto shadow-md p-6 bg-[#080c0e] font-mono">
       <div className="pb-4 bg-[#080c0e]">
         <label htmlFor="table-search" className="sr-only">Search</label>
         <div className="flex items-center">
           <div className="relative mt-1">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg
-                className="w-4 h-4 text-[#a564af]"
+                className="w-5 h-6 text-[#a564af]"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -33,7 +33,7 @@ const Market = () => {
             <input
               type="text"
               id="table-search"
-              className="block pt-2 pl-10 text-sm text-[#a564af] border border-[#68007a] rounded-lg w-80 bg-[#080c0e] active:border-[#68007a]"
+              className="block pt-2 pl-10 text-lg text-[#a564af] border border-[#68007a] rounded-lg w-80 bg-[#080c0e] active:border-[#68007a]"
               placeholder="Search"
             />
           </div>

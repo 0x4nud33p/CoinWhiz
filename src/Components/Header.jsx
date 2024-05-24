@@ -5,11 +5,14 @@ import { Link } from 'react-router-dom';
 import Market from './Market';
 import Dashboard from './Dashboard';
 import Trending from './Trending';
+import { Signup } from '../Exports';
+import {Signin} from '../Exports';
 
 const menuItems = [
   { name: 'Market' },
   { name: 'Trending' },
-  { name: 'Dashboard' },
+  { name: 'Watchlist' },
+  { name: 'Dashboard' }
 ];
 
 function Header() {
@@ -27,7 +30,7 @@ function Header() {
   const isUserLoggedIn = () => true;
 
   return (
-    <div className="relative w-full p-2 bg-[#080c0e] lg:p-6">
+    <div className="relative w-full p-2 bg-[#080c0e] lg:p-6 font-mono">
       <div className="flex items-center justify-between px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
@@ -50,11 +53,11 @@ function Header() {
         </div>
         <div className="hidden space-x-2 lg:block">
           {isUserLoggedIn() ? (
-            <Link to={'/'}>
+            <Link to={'/Signup'}>
               <button type="button" className="px-3 py-2 text-sm font-semibold text-[#68007a] border border-[#68007a] rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign Up</button>
             </Link>
           ) : (
-            <Link to={'/'}>
+            <Link to={'/Signin'}>
               <button type="button" className="px-3 py-2 text-sm font-semibold text-[#68007a] bg-transparent rounded-md hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign In</button>
             </Link>
           )}
@@ -90,7 +93,7 @@ function Header() {
                   </nav>
                 </div>
                 <div className="mt-4 space-y-2">
-                  <Link to={'/'}>
+                  <Link to={'/Signin'}>
                     <button
                       type="button"
                       className="w-full px-3 py-2 text-sm font-semibold text-[#68007a] border border-[#68007a] rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
@@ -98,7 +101,7 @@ function Header() {
                       Sign In
                     </button>
                   </Link>
-                  <Link to={'/'}>
+                  <Link to={'/Signup'}>
                     <button
                       type="button"
                       className="w-full px-3 py-2 text-sm font-semibold text-[#68007a] bg-[#080c0e] rounded-md shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"

@@ -45,7 +45,7 @@ export default function MyCarousel() {
   };
 
   return (
-    <div className="relative mx-auto max-w-7xl mt-5">
+    <div className="relative mx-auto max-w-7xl mt-5 font-mono">
       <div className="relative mx-auto max-w-7xl">
         <Slider {...settings} className="overflow-hidden">
           {crypto.map((item, index) => (
