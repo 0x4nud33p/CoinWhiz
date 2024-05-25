@@ -66,6 +66,7 @@ const Market = () => {
           <thead className="text-xs text-[#a564af] uppercase bg-[#080c0e] border-b border-[#68007a]">
             <tr>
               <th scope="col" className="p-4"> </th>
+              <th scope="col" className="px-6 py-3">  </th>
               <th scope="col" className="px-6 py-3">Image</th>
               <th scope="col" className="px-6 py-3">Coin</th>
               <th scope="col" className="px-6 py-3">Current Price</th>
@@ -83,6 +84,20 @@ const Market = () => {
                 <td className="w-4 p-4">
                   <div className="flex items-center"></div>
                 </td>
+                <td className="px-6 py-4"><label className="relative block cursor-pointer select-none">
+                <input type="checkbox" className="absolute opacity-0 h-0 w-0 peer" />
+                <svg
+                  className="relative w-4 h-4 md:w-8 md:h-18 lg:w-10 lg:h-10 fill-current text-[#706f70] transition-transform duration-300 peer-checked:text-[#68007a] peer-hover:scale-110"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                    <g>
+                      <path d="M9.362,9.158c0,0-3.16,0.35-5.268,0.584c-0.19,0.023-0.358,0.15-0.421,0.343s0,0.394,0.14,0.521 c1.566,1.429,3.919,3.569,3.919,3.569c-0.002,0-0.646,3.113-1.074,5.19c-0.036,0.188,0.032,0.387,0.196,0.506 c0.163,0.119,0.373,0.121,0.538,0.028c1.844-1.048,4.606-2.624,4.606-2.624s2.763,1.576,4.604,2.625 c0.168,0.092,0.378,0.09,0.541-0.029c0.164-0.119,0.232-0.318,0.195-0.505c-0.428-2.078-1.071-5.191-1.071-5.191 s2.353-2.14,3.919-3.566c0.14-0.131,0.202-0.332,0.14-0.524s-0.23-0.319-0.42-0.341c-2.108-0.236-5.269-0.586-5.269-0.586 s-1.31-2.898-2.183-4.83c-0.082-0.173-0.254-0.294-0.456-0.294s-0.375,0.122-0.453,0.294C10.671,6.26,9.362,9.158,9.362,9.158z"></path>
+                    </g>
+                  </g>
+                </svg>
+                </label></td>
                 <td className="px-6 py-4">
                   <img src={crypto.image} alt={crypto.name} width="30" height="30" />
                 </td>
@@ -97,31 +112,33 @@ const Market = () => {
         </table>
       </div>
       {/* Pagination component */}
-      <div className="flex justify-center bg-[#080c0e]">
+      <div className="flex flex-wrap justify-center bg-[#080c0e] p-2">
+      <button
+        onClick={() => handleClick(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="m-1 cursor-pointer text-xs md:text-sm font-semibold text-[#68007a] disabled:opacity-50"
+      >
+        &larr; Previous
+      </button>
+      {[...Array(totalPages)].map((_, index) => (
         <button
-          onClick={() => handleClick(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="mx-1 cursor-pointer text-sm font-semibold text-[#68007a] disabled:opacity-50"
+          key={index}
+          onClick={() => handleClick(index + 1)}
+          className={`m-1 flex items-center rounded-md border border-[#68007a] px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm text-[#68007a] hover:scale-105 ${
+            currentPage === index + 1 ? 'bg-[#68007a] text-white' : ''
+          }`}
         >
-          &larr; Previous
+          {index + 1}
         </button>
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleClick(index + 1)}
-            className={`mx-1 flex items-center rounded-md border border-[#68007a] px-3 py-1 text-[#68007a] hover:scale-105 ${currentPage === index + 1 ? 'bg-[#68007a] text-white' : ''}`}
-          >
-            {index + 1}
-          </button>
-        ))}
-        <button
-          onClick={() => handleClick(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="mx-1 text-sm font-semibold text-[#68007a] disabled:opacity-50"
-        >
-          Next &rarr;
-        </button>
-      </div>
+      ))}
+      <button
+        onClick={() => handleClick(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="m-1 text-xs md:text-sm font-semibold text-[#68007a] disabled:opacity-50"
+      >
+        Next &rarr;
+      </button>
+    </div>
     </div>
   );
 };

@@ -7,7 +7,6 @@ import Trending from './Components/Trending';
 import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Watchlist from './Components/Watchlist';
-import Themebtn from './Components/Themebtn';
 
 export {
   Header,
@@ -18,6 +17,5 @@ export {
   Dashboard,
   Signin,
   Signup,
-  Watchlist,
-  Themebtn
+  Watchlist
 };

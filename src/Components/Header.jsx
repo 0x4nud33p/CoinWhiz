@@ -35,7 +35,7 @@ function Header() {
       <div className="flex items-center justify-between px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
-            {/* logo goes here */}
+                {/* logo goes here */}
           </span>
           <Link to={'/Home'}>
             <span className="font-bold text-xl text-[#68007a]">CoinWhiz</span>

@@ -11,6 +11,8 @@ import {Dashboard} from './Exports.js';
 import {Signin} from  './Exports.js';
 import {Signup} from './Exports.js';
 import {Watchlist} from './Exports.js'
+import { Provider } from 'react-redux';
+import store from './Store/Store.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,8 +30,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Provider store={store}>
     <CryptoProvider>
       <RouterProvider router={router} />
     </CryptoProvider>
+    </Provider>
   </React.StrictMode>
 );
