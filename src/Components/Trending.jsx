@@ -5,9 +5,9 @@ function Trending() {
   const { crypto } = useContext(CryptoContext);
 
   // Dropdown state
-  const [selected, setSelected] = useState('Top 25');
+  const [selected, setSelected] = useState('Top 10');
   const [isOpen, setIsOpen] = useState(false);
-  const options = ['Top 25', 'Top 50', 'Top 75', 'Top 100'];
+  const options = ['Top 10','Top 25', 'Top 50', 'Top 75', 'Top 100'];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
