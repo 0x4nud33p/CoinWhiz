@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import Trending from './Trending';
 import { Signup } from '../Exports';
 import {Signin} from '../Exports';
+import { Toaster } from 'react-hot-toast';
 
 const menuItems = [
   { name: 'Market' },
@@ -30,7 +31,7 @@ function Header() {
   const isUserLoggedIn = () => true;
 
   return (
-    
+    <>
     <div className="relative w-full p-2 bg-[#080c0e] lg:p-6 font-mono">
       <div className="flex items-center justify-between px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
@@ -117,6 +118,21 @@ function Header() {
         )}
       </div>
     </div>
+    <Toaster 
+    toastOptions={{
+      success: {
+        style: {
+          background: 'green',
+        },
+      },
+      error: {
+        style: {
+          background: 'red',
+        },
+      },
+    }}
+    />
+  </>
   );
 }
 

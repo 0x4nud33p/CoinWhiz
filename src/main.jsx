@@ -13,6 +13,7 @@ import {Signup} from './Exports.js';
 import {Watchlist} from './Exports.js'
 import { Provider } from 'react-redux';
 import store from './Store/Store.js';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

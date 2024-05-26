@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import toast, { Toaster } from 'react-hot-toast';
+
+const notify = () => toast('Coin Already Exists in Watchlist!');
+const sucess = () => toast.success('Coin Added to Watchlist!')
 
 const initialState = {
   coins: []
@@ -10,15 +14,21 @@ const watchlistSlice = createSlice({
   reducers: {
     addCoin: (state, action) => {
       const { id, coin, current_price, low_24h, high_24h, image } = action.payload;
-      const newCoin = {
-        id,
-        coin,
-        current_price,
-        low_24h,
-        high_24h,
-        image
-      };
-      state.coins.push(newCoin);
+      const existingCoin = state.coins.find(coin => coin.id === id)
+      if(existingCoin){
+        notify();
+      } else {
+        const newCoin = {
+          id,
+          coin,
+          current_price,
+          low_24h,
+          high_24h,
+          image
+        };
+        state.coins.push(newCoin);
+        sucess();
+      }
     },
     removeCoin: (state, action) => {
       const idToRemove = action.payload;

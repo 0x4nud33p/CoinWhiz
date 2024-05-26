@@ -46,7 +46,6 @@ const Market = () => {
     const handleCheckboxChange = (event, coin) => {
         if (event.target.checked) {
             dispatch(addCoin(coin));
-            console.log(coin)
         }
     };
 
@@ -112,7 +111,7 @@ const Market = () => {
                   <div className="flex items-center">
                     <input
                       type="checkbox"
-                      className="form-checkbox h-5 w-5 text-[#68007a]"
+                      className="form-checkbox h-5 w-5"
                       onChange={(event) => handleCheckboxChange(event, crypto)}
                     />
                   </div>
