@@ -45,28 +45,11 @@ const Market = () => {
 
     const handleCheckboxChange = (event, coin) => {
         if (event.target.checked) {
-            setSelectedCoins([...selectedCoins, coin]);
-        } else {
-            setSelectedCoins(
-                selectedCoins.filter((selectedCoin) => selectedCoin.id !== coin.id)
-            );
+            dispatch(addCoin(coin));
+            console.log(coin)
         }
     };
 
-    const handleAddSelectedCoins = () => {
-      selectedCoins.forEach((coin) => {
-        dispatch(
-          addCoin({
-            id: coin.id,
-            image : coin.image,
-            currentprice: coin.current_price,
-            low_24h: coin.low_24h,
-            high_24h: coin.high_24h
-          })
-        );
-      });
-      setSelectedCoins([]);
-    };
 
   return (
     <div>
@@ -174,14 +157,6 @@ const Market = () => {
           className="m-1 text-xs md:text-sm font-semibold text-[#68007a] disabled:opacity-50"
         >
           Next &rarr;
-        </button>
-      </div>
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={handleAddSelectedCoins}
-          className="rounded-md bg-[#68007a] leading-7 hover:bg-[#68007a]/80 active:border-[#68007a] px-3 py-2 text-sm font-semibold text-white shadow-sm"
-        >
-          Add Selected Coins
         </button>
       </div>
     </div>

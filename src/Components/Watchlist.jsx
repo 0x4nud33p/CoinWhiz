@@ -77,7 +77,7 @@ const Watchlist = () => {
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-12 py-4">
-                            <div className="text-sm text-[#68007a]">${coin.currentprice}</div>
+                            <div className="text-sm text-[#68007a]">${coin.current_price}</div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4">
                             <span className="inline-flex rounded-full text-[#68007a] px-2 text-xs font-semibold leading-5">

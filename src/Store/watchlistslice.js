@@ -9,11 +9,11 @@ const watchlistSlice = createSlice({
   initialState,
   reducers: {
     addCoin: (state, action) => {
-      const { id, coin, currentprice, low_24h, high_24h, image } = action.payload;
+      const { id, coin, current_price, low_24h, high_24h, image } = action.payload;
       const newCoin = {
         id,
         coin,
-        currentprice,
+        current_price,
         low_24h,
         high_24h,
         image
