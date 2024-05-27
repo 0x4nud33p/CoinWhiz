@@ -1,38 +1,35 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Signin } from '../Exports.js';
+import { useForm } from 'react-hook-form';
+import { Client, Account, ID } from 'appwrite';  // Import Appwrite SDK
 
 function Signup() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value
-    }));
-  };
+  // Initialize Appwrite Client
+  const client = new Client()
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject('66540918000ca5b96681');
+  const account = new Account(client);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Handle form submission
+  const create = async (data) => {
+    setError(null);
     try {
-      console.log("Creating account with data:", formData);
-      await authService.createAccount({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name
-      });
-      navigate('/Signin');
+      // Create account
+      const userAccount = await account.create(ID.unique(), data.email, data.password, data.name);
+      if (userAccount) {
+        // Log in the user
+        const session = await account.createEmailPasswordSession(data.email, data.password);
+        console.log(session);
+        navigate('/Signin');
+      }
     } catch (error) {
       console.error("Signup error:", error);
-      setError(error.message);
+      setError(error.message || "An error occurred while signing up.");
     }
   };
 
@@ -56,56 +53,57 @@ function Signup() {
               Sign In
             </Link>
           </p>
-          <form onSubmit={handleSubmit} className="mt-8">
+          {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+          <form onSubmit={handleSubmit(create)} className="mt-8">
             <div className="space-y-5">
               <div>
                 <label htmlFor="name" className="text-base font-medium text-[#68007a]">
-                  {' '}
-                  Full Name{' '}
+                  Full Name
                 </label>
                 <div className="mt-2">
                   <input
-                    className="flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="text-[#aa79b2] flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="text"
                     placeholder="Full Name"
                     id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                  ></input>
+                    {...register("name", { required: true })}
+                  />
                 </div>
               </div>
               <div>
                 <label htmlFor="email" className="text-base font-medium text-[#68007a]">
-                  {' '}
-                  Email address{' '}
+                  Email address
                 </label>
                 <div className="mt-2">
                   <input
-                    className="flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex w-full text-[#aa79b2] h-10 px-3 py-2 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="email"
                     placeholder="Email"
                     id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  ></input>
+                    {...register("email", {
+                      required: true,
+                      pattern: {
+                        value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                        message: "Email address must be a valid address"
+                      }
+                    })}
+                  />
                 </div>
               </div>
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="text-base font-medium text-[#68007a]">
-                    {' '}
-                    Password{' '}
+                    Password
                   </label>
                 </div>
                 <div className="mt-2">
                   <input
-                    className="flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex w-full text-[#aa79b2] h-10 px-3 py-2 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="password"
                     placeholder="Password"
                     id="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  ></input>
+                    {...register("password", { required: true })}
+                  />
                 </div>
               </div>
               <div>
@@ -116,7 +114,6 @@ function Signup() {
                   Create Account <ArrowRight className="ml-2" size={16} />
                 </button>
               </div>
-              {error && <p className="mt-2 text-center text-red-600">{error}</p>}
             </div>
           </form>
         </div>
