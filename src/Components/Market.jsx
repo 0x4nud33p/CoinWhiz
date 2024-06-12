@@ -79,7 +79,7 @@ const Market = () => {
               <input
                 type="text"
                 id="table-search"
-                className="flex pt-2 pl-10 text-[#7f5c86] h-10 px-3 py-2 w-80 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex pt-2 pl-10 h-10 px-3 py-2 w-80 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
