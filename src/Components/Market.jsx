@@ -157,8 +157,7 @@ const Market = () => {
           className="m-1 text-xs md:text-sm font-semibold text-[#68007a] disabled:opacity-50"
         >
           Next &rarr;
-        </button>
-=======
+        </button
 import React, { useContext } from 'react';
 import Dropdown from './Dropdown';
 import { CryptoContext } from '../Api/CryptoContext'
@@ -200,7 +199,6 @@ const Market = () => {
           </div>
           <Dropdown />
         </div>
->>>>>>> parent of f0a8789 (update)
       </div>
       <table className="w-full text-sm text-left text-[#a564af]">
         <thead className="text-xs text-[#a564af] uppercase bg-[#080c0e] border-b border-[#68007a]">

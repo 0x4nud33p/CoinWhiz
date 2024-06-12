@@ -10,13 +10,10 @@ import {Trending} from './Exports.js';
 import {Dashboard} from './Exports.js';
 import {Signin} from  './Exports.js';
 import {Signup} from './Exports.js';
-<<<<<<< HEAD
-import {Watchlist} from './Exports.js'
+import { Watchlist } from './Exports.js'
 import { Provider } from 'react-redux';
 import store from './Store/Store.js';
 import { Toaster } from 'react-hot-toast';
-=======
->>>>>>> parent of f0a8789 (update)
 
 const router = createBrowserRouter(
   createRoutesFromElements(
