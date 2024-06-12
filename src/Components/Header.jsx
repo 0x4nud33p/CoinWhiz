@@ -8,7 +8,6 @@ import Trending from './Trending';
 import { Signup } from '../Exports';
 import {Signin} from '../Exports';
 import { Toaster } from 'react-hot-toast';
-import Home from './Home'
 
 const menuItems = [
   { name: 'Market' },
