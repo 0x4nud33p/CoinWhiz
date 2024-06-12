@@ -18,12 +18,23 @@ import { Toaster } from 'react-hot-toast';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
+<<<<<<< HEAD
       <Route index path='/Home' element={<Home />} />
       <Route path='/Market' element={<Market />} />
       <Route path='/Trending' element={<Trending />} />
       <Route path='/Dashboard' element={<Dashboard />} />
       <Route path='/Signup' element={<Signup />} />
       <Route path='/Signin' element={<Signin />} />
+=======
+      <Route index element={<Home />} />
+      <Route path='Market' element={<Market />} />
+      <Route path='Trending' element={<Trending />} />
+      <Route path='Dashboard' element={<Dashboard />} />
+      <Route path='Signup' element={<Signup />} />
+      <Route path='Signin' element={<Signin />} />
+      <Route path='Watchlist' element={<Watchlist />} />
+      <Route path='Home' element={<Home />} />
+>>>>>>> parent of bc104d3 (Revert "update")
     </Route>
   )
 );
