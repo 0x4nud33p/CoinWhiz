@@ -8,9 +8,14 @@ function Trending() {
   const dispatch = useDispatch();
   const { crypto } = useContext(CryptoContext);
 
+<<<<<<< HEAD
   const [selected, setSelected] = useState('Top 10');
+=======
+  // Dropdown state
+  const [selected, setSelected] = useState('Top 25');
+>>>>>>> parent of f0a8789 (update)
   const [isOpen, setIsOpen] = useState(false);
-  const options = ['Top 10','Top 25', 'Top 50', 'Top 75', 'Top 100'];
+  const options = ['Top 25', 'Top 50', 'Top 75', 'Top 100'];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

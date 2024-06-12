@@ -21,14 +21,15 @@ const Dashboard = () => {
               </div>
               <div>
                 <i className="fas fa-university mr-2 text-lg"></i>
-                Number of coins in the watchlist
+                University of Computer Science
               </div>
             </div>
             <div className="py-10 border-blueGray-200 text-center">
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-9/12 px-4">
                   <p className="mb-2 text-lg leading-relaxed text-blueGray-700">
-                  "The big money is not in the buying and selling, but in the waiting."
+                    An artist of considerable range, Jenna the name taken
+                    by Melbourne-raised, Brooklyn-based Nick Murphy.
                   </p>
                 </div>
               </div>

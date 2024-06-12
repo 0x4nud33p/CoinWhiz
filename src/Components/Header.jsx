@@ -31,7 +31,10 @@ function Header() {
   const isUserLoggedIn = () => true;
 
   return (
+<<<<<<< HEAD
     <>
+=======
+>>>>>>> parent of f0a8789 (update)
     <div className="relative w-full p-2 bg-[#080c0e] lg:p-6 font-mono">
       <div className="flex items-center justify-between px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
