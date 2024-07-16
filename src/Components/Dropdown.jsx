@@ -21,7 +21,7 @@ const Dropdown = () => {
   return (
     <div className="relative inline-block ml-4 text-left font-mono">
       <div
-        className="flex items-center justify-between px-4 py-2 text-[#68007a] border border-[#68007a] rounded-md shadow-sm cursor-pointer select-none"
+        className="flex items-center justify-between px-4 py-2 text-black border border-black rounded-md shadow-sm cursor-pointer select-none bg-white"
         onClick={toggleDropdown}
       >
         <span className="block truncate">{selected}</span>
@@ -39,12 +39,12 @@ const Dropdown = () => {
         </svg>
       </div>
       {isOpen && (
-        <ul className="absolute z-10 w-30 mt-1 text-[#68007a] border border-[#68007a] rounded-md shadow-lg">
+        <ul className="absolute z-10 w-30 mt-1 text-black border border-black rounded-md shadow-lg bg-white">
           {options.map((option) => (
             <li
               key={option}
-              className={`px-4 py-2 cursor-pointer hover:bg-[#b978c6] ${
-                option === selected ? 'bg-[#b978c6]' : ''
+              className={`px-4 py-2 cursor-pointer hover:bg-gray-200 ${
+                option === selected ? 'bg-gray-200' : ''
               }`}
               onClick={() => handleOptionClick(option)}
             >

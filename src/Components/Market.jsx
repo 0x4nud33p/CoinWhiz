@@ -1,162 +1,227 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Dropdown from './Dropdown';
 import Skeleton from 'react-loading-skeleton';
+import { motion } from 'framer-motion'; // Import motion from Framer Motion
 import 'react-loading-skeleton/dist/skeleton.css';
 import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
 import { useDispatch } from 'react-redux';
 
 const Market = () => {
-    const { crypto } = useContext(CryptoContext);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const dispatch = useDispatch();
+  const { crypto } = useContext(CryptoContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const dispatch = useDispatch();
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredCrypto, setFilteredCrypto] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCrypto, setFilteredCrypto] = useState([]);
+  const [sortColumn, setSortColumn] = useState('');
+  const [sortDirection, setSortDirection] = useState('asc');
 
-    useEffect(() => {
-        if (crypto) {
-            setFilteredCrypto(
-                crypto.filter((coin) =>
-                    coin.name.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-            );
-        }
-    }, [crypto, searchTerm]);
-
-    if (!crypto) {
-        return (
-            <div className="relative overflow-x-auto shadow-md p-6 bg-[#080c0e] font-mono">
-                <Skeleton count={10} height={40} />
-            </div>
-        );
+  useEffect(() => {
+    if (crypto) {
+      setFilteredCrypto(
+        crypto.filter((coin) =>
+          coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
     }
+  }, [crypto, searchTerm]);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredCrypto.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(filteredCrypto.length / itemsPerPage);
+  const handleSort = (column) => {
+    const direction = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
+    setSortDirection(direction);
+    setSortColumn(column);
 
-    const handleClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    const sorted = [...filteredCrypto].sort((a, b) => {
+      if (a[column] < b[column]) return direction === 'asc' ? -1 : 1;
+      if (a[column] > b[column]) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
 
-    const handleCheckboxChange = (event, coin) => {
-        if (event.target.checked) {
-            dispatch(addCoin(coin));
-        }
-    };
+    setFilteredCrypto(sorted);
+  };
 
+  if (!crypto) {
     return (
-        <div>
-            <div className="relative overflow-x-auto shadow-md p-6 bg-[#080c0e] font-mono">
-                <div className="pb-4 bg-[#080c0e]">
-                    <label htmlFor="table-search" className="sr-only">
-                        Search
-                    </label>
-                    <div className="flex items-center">
-                        <div className="relative mt-1">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg
-                                    className="w-5 h-6 text-[#a564af]"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                                    />
-                                </svg>
-                            </div>
-                            <input
-                                type="text"
-                                id="table-search"
-                                className="flex pt-2 pl-10 h-10 px-3 py-2 w-80 text-sm bg-transparent border border-[#68007a] rounded-md placeholder:text-[#68007a] focus:outline-none focus:ring-1 focus:ring-[#68007a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                placeholder="Search"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-                        <Dropdown />
-                    </div>
-                </div>
-                <table className="w-full text-sm text-left text-[#a564af]">
-                    <thead className="text-xs text-[#a564af] uppercase bg-[#080c0e] border-b border-[#68007a]">
-                        <tr>
-                            <th scope="col" className="p-4"></th>
-                            <th scope="col" className="px-6 py-3"></th>
-                            <th scope="col" className="px-6 py-3">Image</th>
-                            <th scope="col" className="px-6 py-3">Coin</th>
-                            <th scope="col" className="px-6 py-3">Current Price</th>
-                            <th scope="col" className="px-6 py-3">Market Cap</th>
-                            <th scope="col" className="px-6 py-3">24hr High</th>
-                            <th scope="col" className="px-6 py-3">24hr Low</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentItems.map((crypto) => (
-                            <tr
-                                key={crypto.id}
-                                className="border-b bg-[#080c0e] border-[#68007a] hover:bg-[#551f5e]"
-                            >
-                                <td className="w-4 p-4">
-                                    <div className="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            className="form-checkbox h-5 w-5"
-                                            onChange={(event) => handleCheckboxChange(event, crypto)}
-                                        />
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4"></td>
-                                <td className="px-6 py-4">
-                                    <img src={crypto.image} alt={crypto.name} width="30" height="30" />
-                                </td>
-                                <td className="px-6 py-4">{crypto.name}</td>
-                                <td className="px-6 py-4">${crypto.current_price}</td>
-                                <td className="px-6 py-4">${crypto.market_cap}</td>
-                                <td className="px-6 py-4">${crypto.high_24h}</td>
-                                <td className="px-6 py-4">${crypto.low_24h}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="flex flex-wrap justify-center bg-[#080c0e] p-2">
-                <button
-                    onClick={() => handleClick(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="m-1 cursor-pointer text-xs md:text-sm font-semibold text-[#68007a] disabled:opacity-50"
-                >
-                    &larr; Previous
-                </button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handleClick(index + 1)}
-                        className={`m-1 flex items-center rounded-md border border-[#68007a] px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm text-[#68007a] hover:scale-105 ${
-                            currentPage === index + 1 ? 'bg-[#68007a] text-white' : ''
-                        }`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button
-                    onClick={() => handleClick(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="m-1 text-xs md:text-sm font-semibold text-[#68007a] disabled:opacity-50"
-                >
-                    Next &rarr;
-                </button>
-            </div>
-        </div>
+      <div className="relative overflow-x-auto shadow-md p-6 bg-white text-black font-mono">
+        <Skeleton count={10} height={40} />
+      </div>
     );
+  }
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredCrypto.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredCrypto.length / itemsPerPage);
+
+  const handleClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleCheckboxChange = (event, coin) => {
+    if (event.target.checked) {
+      dispatch(addCoin(coin));
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -100 }}
+      transition={{ duration: 0.5 }}
+      className="overflow-hidden"
+    >
+      <div className="relative overflow-x-auto shadow-md p-6 bg-white text-black font-mono">
+        <div className="pb-4 bg-white">
+          <label htmlFor="table-search" className="sr-only">
+            Search
+          </label>
+          <div className="flex items-center">
+            <div className="relative mt-1">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg
+                  className="w-5 h-6 text-black"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="table-search"
+                className="flex pt-2 pl-10 h-10 px-3 py-2 w-80 text-sm text-black bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <Dropdown />
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto">
+            <thead>
+              <tr className="bg-muted text-muted-foreground">
+                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('name')}>
+                  Coin
+                  {sortColumn === 'name' && (
+                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                  )}
+                </th>
+                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('symbol')}>
+                  Symbol
+                  {sortColumn === 'symbol' && (
+                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                  )}
+                </th>
+                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('current_price')}>
+                  Price
+                  {sortColumn === 'current_price' && (
+                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                  )}
+                </th>
+                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('high_24h')}>
+                  24h High
+                  {sortColumn === 'high_24h' && (
+                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                  )}
+                </th>
+                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('low_24h')}>
+                  24h Low
+                  {sortColumn === 'low_24h' && (
+                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                  )}
+                </th>
+                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('market_cap')}>
+                  Market Cap
+                  {sortColumn === 'market_cap' && (
+                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                  )}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map((crypto) => (
+                <motion.tr
+                  key={crypto.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="border-b bg-white border-black hover:bg-gray-200"
+                >
+                  <td className="w-4 p-4">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox h-5 w-5"
+                        onChange={(event) => handleCheckboxChange(event, crypto)}
+                      />
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <img src={crypto.image} alt={crypto.name} width="30" height="30" />
+                  </td>
+                  <td className="px-6 py-4">{crypto.name}</td>
+                  <td className="px-6 py-4">{crypto.symbol}</td>
+                  <td className="px-6 py-4">${crypto.current_price}</td>
+                  <td className="px-6 py-4">${crypto.market_cap}</td>
+                  <td className="px-6 py-4">${crypto.high_24h}</td>
+                  <td className="px-6 py-4">${crypto.low_24h}</td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="flex flex-wrap justify-center bg-white p-2">
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          onClick={() => handleClick(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="m-1 cursor-pointer text-xs md:text-sm font-semibold text-black disabled:opacity-50"
+        >
+          &larr; Previous
+        </motion.button>
+        {[...Array(totalPages)].map((_, index) => (
+          <motion.button
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            onClick={() => handleClick(index + 1)}
+            className={`m-1 flex items-center rounded-md border border-black px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm text-black hover:scale-105 ${
+              currentPage === index + 1 ? 'bg-black text-white' : ''
+            }`}
+          >
+            {index + 1}
+          </motion.button>
+        ))}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          onClick={() => handleClick(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="m-1 text-xs md:text-sm font-semibold text-black disabled:opacity-50"
+        >
+          Next &rarr;
+        </motion.button>
+      </div>
+    </motion.div>
+  );
 };
 
 export default Market;

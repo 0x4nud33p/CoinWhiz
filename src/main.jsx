@@ -10,10 +10,11 @@ import {Trending} from './Exports.js';
 import {Dashboard} from './Exports.js';
 import {Signin} from  './Exports.js';
 import {Signup} from './Exports.js';
-// import { Watchlist } from './Exports.js'
+import { Watchlist } from './Exports.js'
 import { Provider } from 'react-redux';
 import store from './Store/Store.js';
 import { Toaster } from 'react-hot-toast';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,7 +31,7 @@ const router = createBrowserRouter(
       <Route path='Dashboard' element={<Dashboard />} />
       <Route path='Signup' element={<Signup />} />
       <Route path='Signin' element={<Signin />} />
-      {/* <Route path='Watchlist' element={<Watchlist />} /> */}
+      <Route path='Watchlist' element={<Watchlist />} />
       <Route path='Home' element={<Home />} />
     </Route>
   )

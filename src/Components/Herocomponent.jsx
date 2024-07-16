@@ -1,24 +1,35 @@
-import React from 'react'
-import MyCarousel from './MyCarousel'
+import React from 'react';
+import MyCarousel from './MyCarousel';
+import { motion } from 'framer-motion'; // Import motion from Framer Motion
 
 function Herocomponent() {
   return (
     <>
-    <div className="hidden sm:block font-mono mb-5">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-[#a564af] sm:text-6xl">
-          CoinWhiz
-        </h1>
-        <p className="mt-6 text-lg leading-8 text-[#4f3155]">
-          "Stay Ahead of the Market with CoinWhiz"
-        </p>
-      </div>
-    </div>
-     <div>
-          <MyCarousel />
-     </div>
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white hidden sm:block font-mono"
+      >
+        <div className="text-center">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+            CoinWhiz
+          </h1>
+          <p className="mt-2 text-lg leading-8">
+            "Stay Ahead of the Market with CoinWhiz"
+          </p>
+        </div>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white"
+      >
+        <MyCarousel />
+      </motion.div>
     </>
-  )
+  );
 }
 
-export default Herocomponent
+export default Herocomponent;

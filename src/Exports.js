@@ -6,6 +6,7 @@ import Dashboard from './Components/Dashboard';
 import Trending from './Components/Trending';
 import Signin from './Components/Signin';
 import Signup from './Components/Signup';
+import Watchlist from './Components/Watchlist';
 
 export {
   Header,
@@ -15,5 +16,6 @@ export {
   Trending,
   Dashboard,
   Signin,
-  Signup
+  Signup,
+  Watchlist
 };

@@ -12,7 +12,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
     "appwrite": "^14.0.1",
-    "framer-motion": "^11.2.6",
+    "classnames": "^2.5.1",
+    "framer-motion": "^11.3.4",
     "lucide-react": "^0.379.0",
     "nanoid": "^5.0.7",
     "react": "^18.2.0",
