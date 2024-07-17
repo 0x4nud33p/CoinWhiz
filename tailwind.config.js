@@ -40,7 +40,9 @@ export default {
         DEFAULT: 'hsl(var(--card))',
         foreground: 'hsl(var(--card-foreground))'
       },
+      maskType: ['mask'],
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 };

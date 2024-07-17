@@ -4,7 +4,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from ".
 import { ChartTooltipContent, ChartTooltip, ChartContainer } from "./ui/Chart";
 import { Pie, PieChart, CartesianGrid, XAxis, Line, LineChart, Bar, BarChart } from "recharts";
 
-export default function Component() {
+export default function Portfolio() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="flex items-center h-16 px-4 border-b bg-card shadow-sm md:px-6">

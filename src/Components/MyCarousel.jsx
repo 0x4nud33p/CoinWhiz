@@ -60,8 +60,7 @@ const MyCarousel = ({ isDarkMode }) => {
           {crypto.map((item, index) => (
             <Card
               key={index}
-              className="w-full max-w-md transition-colors 
-                bg-muted text-muted-foreground"
+              className="w-full max-w-md transition-colors bg-gray-200 text-gray-700 rounded-lg shadow-md"
             >
               <div className="flex items-center justify-between p-4">
                 <div className="space-y-2">
@@ -89,8 +88,7 @@ const MyCarousel = ({ isDarkMode }) => {
           {crypto.map((item, index) => (
             <Card
               key={index}
-              className="w-full max-w-md transition-colors 
-                bg-muted text-muted-foreground"
+              className="w-full max-w-md transition-colors bg-gray-200 text-gray-700 rounded-lg shadow-md"
             >
               <div className="flex items-center justify-between p-4">
                 <div className="space-y-2">

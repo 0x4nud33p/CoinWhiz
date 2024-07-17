@@ -3,12 +3,13 @@ import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Signup, Signin, Watchlist } from '../Exports';
+import CoinWhizLogo from './ui/CoinWhizLogo';
 
 const menuItems = [
   { name: 'Market' },
   { name: 'Trending' },
   { name: 'Watchlist' },
-  { name: 'Dashboard' },
+  { name: 'Portfolio' },
 ];
 
 function Header() {
@@ -26,6 +27,7 @@ function Header() {
           <div className="inline-flex items-center space-x-2">
             <span>
               {/* logo goes here */}
+              <CoinWhizLogo />
             </span>
             <Link to={'/Home'}>
               <span className="font-bold text-xl text-black">CoinWhiz</span>

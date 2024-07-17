@@ -1,14 +1,10 @@
 import React from 'react';
 import MyCarousel from './MyCarousel';
-import { motion } from 'framer-motion'; // Import motion from Framer Motion
 
 function Herocomponent() {
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <div
         className="bg-white hidden sm:block font-mono"
       >
         <div className="text-center">
@@ -19,15 +15,15 @@ function Herocomponent() {
             "Stay Ahead of the Market with CoinWhiz"
           </p>
         </div>
-      </motion.div>
-      <motion.div
+      </div>
+      <div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="bg-white"
       >
         <MyCarousel />
-      </motion.div>
+      </div>
     </>
   );
 }

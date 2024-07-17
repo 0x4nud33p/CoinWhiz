@@ -19,7 +19,7 @@ const Dropdown = () => {
   }, [selected]);
 
   return (
-    <div className="relative inline-block ml-4 text-left font-mono">
+    <div className="relative inline-block text-left font-mono">
       <div
         className="flex items-center justify-between px-4 py-2 text-black border border-black rounded-md shadow-sm cursor-pointer select-none bg-white"
         onClick={toggleDropdown}
@@ -39,7 +39,7 @@ const Dropdown = () => {
         </svg>
       </div>
       {isOpen && (
-        <ul className="absolute z-10 w-30 mt-1 text-black border border-black rounded-md shadow-lg bg-white">
+        <ul className="absolute z-10 w-36 mt-1 text-black border border-black rounded-md shadow-lg bg-white">
           {options.map((option) => (
             <li
               key={option}

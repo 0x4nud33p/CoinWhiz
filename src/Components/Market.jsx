@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Dropdown from './Dropdown';
 import Skeleton from 'react-loading-skeleton';
-import { motion } from 'framer-motion'; // Import motion from Framer Motion
+import { motion } from 'framer-motion';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
@@ -29,7 +29,8 @@ const Market = () => {
   }, [crypto, searchTerm]);
 
   const handleSort = (column) => {
-    const direction = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
+    const direction =
+      sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
     setSortDirection(direction);
     setSortColumn(column);
 
@@ -52,7 +53,10 @@ const Market = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredCrypto.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredCrypto.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const totalPages = Math.ceil(filteredCrypto.length / itemsPerPage);
 
   const handleClick = (pageNumber) => {
@@ -100,53 +104,85 @@ const Market = () => {
               <input
                 type="text"
                 id="table-search"
-                className="flex pt-2 pl-10 h-10 px-3 py-2 w-80 text-sm text-black bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex pt-2 pl-10 h-10 px-3 py-2 w-full md:w-80 text-sm text-black bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Dropdown />
+            <div className="ml-4 md:ml-2">
+              <Dropdown />
+            </div>
           </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-muted text-muted-foreground">
-                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('name')}>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => handleSort('name')}
+                >
                   Coin
                   {sortColumn === 'name' && (
-                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                    <span className="ml-2">
+                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
+                    </span>
                   )}
                 </th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('symbol')}>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => handleSort('symbol')}
+                >
                   Symbol
                   {sortColumn === 'symbol' && (
-                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                    <span className="ml-2">
+                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
+                    </span>
                   )}
                 </th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('current_price')}>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => handleSort('current_price')}
+                >
                   Price
                   {sortColumn === 'current_price' && (
-                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                    <span className="ml-2">
+                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
+                    </span>
                   )}
                 </th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('high_24h')}>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => handleSort('high_24h')}
+                >
                   24h High
                   {sortColumn === 'high_24h' && (
-                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                    <span className="ml-2">
+                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
+                    </span>
                   )}
                 </th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('low_24h')}>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => handleSort('low_24h')}
+                >
                   24h Low
                   {sortColumn === 'low_24h' && (
-                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                    <span className="ml-2">
+                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
+                    </span>
                   )}
                 </th>
-                <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort('market_cap')}>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => handleSort('market_cap')}
+                >
                   Market Cap
                   {sortColumn === 'market_cap' && (
-                    <span className="ml-2">{sortDirection === 'asc' ? '\u25B2' : '\u25BC'}</span>
+                    <span className="ml-2">
+                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
+                    </span>
                   )}
                 </th>
               </tr>
@@ -170,7 +206,12 @@ const Market = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <img src={crypto.image} alt={crypto.name} width="30" height="30" />
+                    <img
+                      src={crypto.image}
+                      alt={crypto.name}
+                      width="30"
+                      height="30"
+                    />
                   </td>
                   <td className="px-6 py-4">{crypto.name}</td>
                   <td className="px-6 py-4">{crypto.symbol}</td>
