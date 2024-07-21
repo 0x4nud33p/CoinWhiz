@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -8,7 +8,7 @@ import { Card } from './ui/Card';
 const MyCarousel = ({ isDarkMode }) => {
   const { crypto } = useContext(CryptoContext);
 
-  const settingsLeft = {
+  const settings = useMemo(() => ({
     accessibility: true,
     dots: false,
     infinite: true,
@@ -45,74 +45,54 @@ const MyCarousel = ({ isDarkMode }) => {
         },
       },
     ],
-  };
+  }), []);
 
-  const settingsRight = {
-    ...settingsLeft,
+  const settingsRight = useMemo(() => ({
+    ...settings,
     rtl: true,
     initialSlide: crypto.length - 1,
-  };
+  }), [settings, crypto.length]);
+
+  const renderCard = (item, index) => (
+    <Card
+      key={index}
+      className="w-full max-w-md transition-colors bg-gray-200 text-gray-700 rounded-lg shadow-md"
+    >
+      <div className="flex items-center justify-between p-4">
+        <div className="space-y-2">
+          <div className="flex items-center gap-4">
+            <img
+              className="w-10 h-10 rounded-full"
+              src={item.image}
+              alt={item.name}
+              loading="lazy"
+            />
+            <div className="font-medium">
+              <div>{item.name}</div>
+              <div className="text-sm">
+                ${item.current_price.toFixed(3)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
 
   return (
     <div className="relative mx-auto max-w-7xl font-mono bg-white">
       <div className="relative mx-auto max-w-7xl bg-white">
-        <Slider {...settingsLeft} className="overflow-hidden px-2">
-          {crypto.map((item, index) => (
-            <Card
-              key={index}
-              className="w-full max-w-md transition-colors bg-gray-200 text-gray-700 rounded-lg shadow-md"
-            >
-              <div className="flex items-center justify-between p-4">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-4">
-                    <img
-                      className="w-10 h-10 rounded-full"
-                      src={item.image}
-                      alt={item.name}
-                    />
-                    <div className="font-medium">
-                      <div>{item.name}</div>
-                      <div className="text-sm">
-                        ${item.current_price.toFixed(3)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          ))}
+        <Slider {...settings} className="overflow-hidden px-2">
+          {crypto.map(renderCard)}
         </Slider>
       </div>
       <div className="relative mx-auto max-w-7xl bg-white">
         <Slider {...settingsRight} className="overflow-hidden px-2">
-          {crypto.map((item, index) => (
-            <Card
-              key={index}
-              className="w-full max-w-md transition-colors bg-gray-200 text-gray-700 rounded-lg shadow-md"
-            >
-              <div className="flex items-center justify-between p-4">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-4">
-                    <img
-                      className="w-10 h-10 rounded-full"
-                      src={item.image}
-                      alt={item.name}
-                    />
-                    <div className="font-medium">
-                      <div>{item.name}</div>
-                      <div className="text-sm">
-                        ${item.current_price.toFixed(3)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          ))}
+          {crypto.map(renderCard)}
         </Slider>
       </div>
     </div>
   );
 };
 
-export default MyCarousel;
+export default React.memo(MyCarousel);

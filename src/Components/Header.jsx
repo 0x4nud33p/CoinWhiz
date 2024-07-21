@@ -7,7 +7,6 @@ import CoinWhizLogo from './ui/CoinWhizLogo';
 
 const menuItems = [
   { name: 'Market' },
-  { name: 'Trending' },
   { name: 'Watchlist' },
   { name: 'Portfolio' },
 ];
@@ -26,7 +25,6 @@ function Header() {
         <div className="flex items-center justify-between px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="inline-flex items-center space-x-2">
             <span>
-              {/* logo goes here */}
               <CoinWhizLogo />
             </span>
             <Link to={'/Home'}>
@@ -65,7 +63,7 @@ function Header() {
                   <div className="flex items-center justify-between">
                     <div className="inline-flex items-center space-x-2">
                       <span>
-                        {/* logo goes here */}
+                        <CoinWhizLogo />
                       </span>
                       <span className="font-bold text-xl text-black">CryptoWhiz</span>
                     </div>
@@ -86,11 +84,8 @@ function Header() {
                     </nav>
                   </div>
                   <div className="mt-4 space-y-2">
-                    <Link to={'/Signin'}>
-                      <button type="button" className="w-full px-3 py-2 text-sm font-semibold text-black border border-black rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign In</button>
-                    </Link>
                     <Link to={'/Signup'}>
-                      <button type="button" className="w-full px-3 py-2 text-sm font-semibold text-black bg-black rounded-md shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign Up</button>
+                      <button type="button" className="text-white w-full px-3 py-2 text-sm font-semibold text-black bg-black rounded-md shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Sign Up</button>
                     </Link>
                   </div>
                 </div>
@@ -103,8 +98,8 @@ function Header() {
         toastOptions={{
           success: {
             style: {
-              background: '#68007a',
-              color: 'white',
+              background: 'white',
+              color: 'black',
             },
           },
           error: {

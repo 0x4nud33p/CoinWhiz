@@ -119,6 +119,8 @@ const Market = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-muted text-muted-foreground">
+                <th className="px-4 py-2 cursor-pointer"></th>
+                <th className="px-4 py-2 cursor-pointer"></th>
                 <th
                   className="px-4 py-2 cursor-pointer"
                   onClick={() => handleSort('name')}
@@ -216,9 +218,9 @@ const Market = () => {
                   <td className="px-6 py-4">{crypto.name}</td>
                   <td className="px-6 py-4">{crypto.symbol}</td>
                   <td className="px-6 py-4">${crypto.current_price}</td>
-                  <td className="px-6 py-4">${crypto.market_cap}</td>
                   <td className="px-6 py-4">${crypto.high_24h}</td>
                   <td className="px-6 py-4">${crypto.low_24h}</td>
+                  <td className="px-6 py-4">${crypto.market_cap}</td>
                 </motion.tr>
               ))}
             </tbody>
@@ -232,33 +234,35 @@ const Market = () => {
           transition={{ delay: 0.2 }}
           onClick={() => handleClick(currentPage - 1)}
           disabled={currentPage === 1}
-          className="m-1 cursor-pointer text-xs md:text-sm font-semibold text-black disabled:opacity-50"
+          className="m-1 cursor-pointer text-xs md:text-sm font-semibold py-1 px-2 border-2 border-black bg-transparent text-black hover:bg-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          &larr; Previous
+          Prev
         </motion.button>
-        {[...Array(totalPages)].map((_, index) => (
+        {Array.from({ length: totalPages }, (_, i) => (
           <motion.button
-            key={index}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            onClick={() => handleClick(index + 1)}
-            className={`m-1 flex items-center rounded-md border border-black px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm text-black hover:scale-105 ${
-              currentPage === index + 1 ? 'bg-black text-white' : ''
+            transition={{ delay: 0.2 + i * 0.1 }}
+            key={i + 1}
+            onClick={() => handleClick(i + 1)}
+            className={`m-1 cursor-pointer text-xs md:text-sm font-semibold py-1 px-2 border-2 border-black bg-transparent ${
+              currentPage === i + 1
+                ? 'bg-black text-white'
+                : 'text-black hover:bg-black hover:text-white'
             }`}
           >
-            {index + 1}
+            {i + 1}
           </motion.button>
         ))}
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.2 + totalPages * 0.1 }}
           onClick={() => handleClick(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="m-1 text-xs md:text-sm font-semibold text-black disabled:opacity-50"
+          className="m-1 cursor-pointer text-xs md:text-sm font-semibold py-1 px-2 border-2 border-black bg-transparent text-black hover:bg-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Next &rarr;
+          Next
         </motion.button>
       </div>
     </motion.div>
