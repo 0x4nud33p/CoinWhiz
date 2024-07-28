@@ -53,10 +53,7 @@ const Market = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredCrypto.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = filteredCrypto.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredCrypto.length / itemsPerPage);
 
   const handleClick = (pageNumber) => {
@@ -118,7 +115,7 @@ const Market = () => {
         <div className="overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
-              <tr className="bg-muted text-muted-foreground">
+              <tr className="bg-gray-100 text-gray-700">
                 <th className="px-4 py-2 cursor-pointer"></th>
                 <th className="px-4 py-2 cursor-pointer"></th>
                 <th
@@ -196,7 +193,7 @@ const Market = () => {
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="border-b bg-white border-black hover:bg-gray-200"
+                  className="border-b bg-white border-gray-200 hover:bg-gray-50"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -213,6 +210,7 @@ const Market = () => {
                       alt={crypto.name}
                       width="30"
                       height="30"
+                      className="rounded-full"
                     />
                   </td>
                   <td className="px-6 py-4">{crypto.name}</td>
@@ -234,33 +232,37 @@ const Market = () => {
           transition={{ delay: 0.2 }}
           onClick={() => handleClick(currentPage - 1)}
           disabled={currentPage === 1}
-          className="m-1 cursor-pointer text-xs md:text-sm font-semibold py-1 px-2 border-2 border-black bg-transparent text-black hover:bg-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
+            currentPage === 1 ? 'bg-gray-200 text-gray-500' : 'bg-black text-white hover:bg-gray-500'
+          }`}
         >
-          Prev
+          Previous
         </motion.button>
-        {Array.from({ length: totalPages }, (_, i) => (
+        {Array.from({ length: totalPages }, (_, index) => (
           <motion.button
+            key={index + 1}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 + i * 0.1 }}
-            key={i + 1}
-            onClick={() => handleClick(i + 1)}
-            className={`m-1 cursor-pointer text-xs md:text-sm font-semibold py-1 px-2 border-2 border-black bg-transparent ${
-              currentPage === i + 1
-                ? 'bg-black text-white'
-                : 'text-black hover:bg-black hover:text-white'
+            transition={{ delay: (index + 1) * 0.1 }}
+            onClick={() => handleClick(index + 1)}
+            className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
+              currentPage === index + 1
+                ? 'bg-gray-500 text-white'
+                : 'bg-white text-black hover:bg-gray-300'
             }`}
           >
-            {i + 1}
+            {index + 1}
           </motion.button>
         ))}
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 + totalPages * 0.1 }}
+          transition={{ delay: 0.2 }}
           onClick={() => handleClick(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="m-1 cursor-pointer text-xs md:text-sm font-semibold py-1 px-2 border-2 border-black bg-transparent text-black hover:bg-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
+            currentPage === totalPages ? 'bg-gray-200 text-gray-500' : 'bg-black text-white hover:bg-gray-500'
+          }`}
         >
           Next
         </motion.button>

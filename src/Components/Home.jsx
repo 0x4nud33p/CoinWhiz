@@ -1,4 +1,5 @@
-import { Header,Herocomponent,Market } from '../Exports'
+import { Header,Herocomponent,Market} from '../Exports'
+import {Info} from '../Exports'
 
 function Home() {
 
@@ -43,6 +44,9 @@ function Home() {
           </div>
         </div>
       </section>
+    </div>
+    <div>
+    <Info />
     </div>
     </>
   )

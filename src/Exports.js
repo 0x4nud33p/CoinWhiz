@@ -6,6 +6,7 @@ import Portfolio from './Components/Portfolio';
 import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Watchlist from './Components/Watchlist';
+import Info from './Components/Info';
 
 export {
   Header,
@@ -15,5 +16,6 @@ export {
   Portfolio,
   Signin,
   Signup,
-  Watchlist
+  Watchlist,
+  Info
 };

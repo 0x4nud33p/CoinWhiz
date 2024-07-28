@@ -85,7 +85,7 @@ function Header() {
                   </div>
                   <div className="mt-4 space-y-2">
                     <Link to={'/Signup'}>
-                      <button type="button" className="text-white w-full px-3 py-2 text-sm font-semibold text-black bg-black rounded-md shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Sign Up</button>
+                      <button type="button" className="text-white w-full px-3 py-2 text-sm font-semibold bg-black rounded-md shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Sign Up</button>
                     </Link>
                   </div>
                 </div>
