@@ -107,15 +107,12 @@ const Market = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="ml-4 md:ml-2">
-              <Dropdown />
-            </div>
           </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
-              <tr className="bg-gray-100 text-gray-700">
+              <tr className="bg-gray-200 text-gray-700">
                 <th className="px-4 py-2 cursor-pointer"></th>
                 <th className="px-4 py-2 cursor-pointer"></th>
                 <th
@@ -193,7 +190,7 @@ const Market = () => {
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="border-b bg-white border-gray-200 hover:bg-gray-50"
+                  className="border-b bg-white border-gray-200 hover:bg-gray-200"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
