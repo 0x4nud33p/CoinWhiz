@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 
 const notify = () => toast('Coin Already Exists in Watchlist!');
 const success = () => toast.success('Coin Added to Watchlist!');
+const removed = () => toast.success('Coin Removed from Watchlist!');
 
 const initialState = {
   coins: []
@@ -15,17 +16,10 @@ const watchlistSlice = createSlice({
     addCoin: (state, action) => {
       const { id, coin, current_price, low_24h, high_24h, image } = action.payload;
       const existingCoin = state.coins.find(coin => coin.id === id);
-      if(existingCoin){
+      if (existingCoin) {
         notify();
       } else {
-        const newCoin = {
-          id,
-          coin,
-          current_price,
-          low_24h,
-          high_24h,
-          image
-        };
+        const newCoin = { id, coin, current_price, low_24h, high_24h, image };
         state.coins.push(newCoin);
         success();
       }
@@ -33,6 +27,7 @@ const watchlistSlice = createSlice({
     removeCoin: (state, action) => {
       const idToRemove = action.payload;
       state.coins = state.coins.filter(coin => coin.id !== idToRemove);
+      removed();
     },
     updateCoin: (state, action) => {
       const updatedCoin = action.payload;

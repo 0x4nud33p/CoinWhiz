@@ -36,9 +36,12 @@ export default function Watchlist() {
             <h1 className="text-3xl font-bold tracking-tight">Watchlist</h1>
             <p className="text-gray-500">Track your favorite cryptocurrencies.</p>
           </div>
+          <Button variant="outline" size="sm" onClick={handleAddCoin}>
+            Add Coin
+          </Button>
           <Link to={'/Market'}>
-            <Button variant="outline" size="sm" onClick={handleAddCoin}>
-              Add Coin
+            <Button variant="outline" size="sm">
+              Go to Market
             </Button>
           </Link>
         </div>
