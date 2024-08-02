@@ -6,6 +6,7 @@ import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Watchlist from './Components/Watchlist';
 import Info from './Components/Info';
+import Chart from './Components/Chart';
 
 export {
   Header,
@@ -15,5 +16,6 @@ export {
   Signin,
   Signup,
   Watchlist,
-  Info
+  Info,
+  Chart
 };

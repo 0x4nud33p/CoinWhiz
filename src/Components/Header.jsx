@@ -8,6 +8,7 @@ import CoinWhizLogo from './ui/CoinWhizLogo';
 const menuItems = [
   { name: 'Market' },
   { name: 'Watchlist' },
+  { name: 'Chart' },
 ];
 
 function Header() {

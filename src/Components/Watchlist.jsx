@@ -3,7 +3,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addCoin, removeCoin } from "../Store/watchlistslice";
 import { Button } from "../Components/ui/Button";
-import { Card } from "../Components/ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "../Components/ui/Card";
 import { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import '../card.css';
@@ -51,33 +51,34 @@ export default function Watchlist() {
               key={coin.id}
               className="p-4 flex items-center justify-between bg-white shadow-md rounded-lg"
             >
-              <div className="flex items-center gap-4">
-                <div className="grid gap-1">
-                  <div className="flex items-center gap-2">
-                    <div className="font-medium text-lg">{coin.coin}</div>
-                    <div className="text-gray-500 text-sm">({coin.id.toUpperCase()})</div>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="font-medium text-xl">${coin.current_price.toFixed(2)}</div>
-                    <div
-                      className={`px-2 py-0.5 rounded-md text-xs ${
-                        coin.current_price >= coin.low_24h ? "bg-green-200 text-green-700" : "bg-red-200 text-red-700"
-                      }`}
-                    >
-                      ${coin.current_price.toFixed(2)}
+              <CardHeader className="w-full">
+                <div className="flex items-center gap-4">
+                  <div className="grid gap-1">
+                    <div className="flex items-center gap-2">
+                      <CardTitle className="font-medium text-lg">{coin.coin}</CardTitle>
+                      <div className="text-gray-500 text-sm">({coin.id.toUpperCase()})</div>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="font-medium text-xl">${coin.current_price.toFixed(2)}</div>
+                      <div
+                        className={`px-2 py-0.5 rounded-md text-xs ${
+                          coin.current_price >= coin.low_24h ? "bg-green-200 text-green-700" : "bg-red-200 text-red-700"
+                        }`}
+                      >
+                        ${coin.current_price.toFixed(2)}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                onClick={() => handleRemoveCoin(coin.id)}
-              >
-                <XIcon className="h-5 w-5" />
-                <span className="sr-only">Remove {coin.coin}</span>
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleRemoveCoin(coin.id)}
+                >
+                  <XIcon className="h-5 w-5" />
+                  <span className="sr-only">Remove {coin.coin}</span>
+                </Button>
+              </CardHeader>
             </Card>
           ))}
         </div>

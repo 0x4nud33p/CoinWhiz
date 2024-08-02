@@ -1,17 +1,14 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { CryptoProvider } from './Api/CryptoContext.jsx';
-import Layout from './Layout/Layout.jsx';
-import Home from './Components/Home.jsx'
-import { Market } from './Exports.js';
-import {Signin} from  './Exports.js';
-import {Signup} from './Exports.js';
-import { Watchlist } from './Exports.js'
-import { Provider } from 'react-redux';
 import store from './Store/Store.js';
+import { Provider } from 'react-redux';
+import Home from './Components/Home.jsx'
+import Layout from './Layout/Layout.jsx';
 import { Toaster } from 'react-hot-toast';
+import { CryptoProvider } from './Api/CryptoContext.jsx';
+import { Market,Signin,Signup,Watchlist,Chart } from './Exports.js';
+import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 
 
 const router = createBrowserRouter(
@@ -21,12 +18,9 @@ const router = createBrowserRouter(
       <Route path='/Market' element={<Market />} />
       <Route path='/Signup' element={<Signup />} />
       <Route path='/Signin' element={<Signin />} />
-      <Route index element={<Home />} />
-      <Route path='Market' element={<Market />} />
-      <Route path='Signup' element={<Signup />} />
-      <Route path='Signin' element={<Signin />} />
+      <Route path='/Chart' element={<Chart />} />
       <Route path='Watchlist' element={<Watchlist />} />
-      <Route path='Home' element={<Home />} />
+      <Route index element={<Home />} />
     </Route>
   )
 );
