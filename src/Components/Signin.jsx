@@ -1,110 +1,162 @@
-import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-// import { authService } from '../Exports'; // Adjust the import as needed
-import CoinWhizLogo from './ui/CoinWhizLogo';
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
+import { useState, useCallback, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-function Signin() {
+export default function Signin() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
+  const [formError, setFormError] = useState(null);
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+
+  const validateForm = useCallback(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormError("Please enter a valid email address");
+      return false;
+    }
+    setFormError(null);
+    return true;
+  }, [formData.email]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value
-    }));
+    setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null); // Clear previous errors
-    try {
-      console.log("Signing in with data:", formData);
-      await authService.signIn({
-        email: formData.email,
-        password: formData.password
-      });
-      navigate(''); // Adjust the navigation as needed
-    } catch (error) {
-      console.error("Signin error:", error);
-      setError(error.message);
-    }
-  };
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      const loadingToast = toast.loading("Signing in...");
+      setIsLoading(true);
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/signin",
+          {
+            email: formData.email,
+            password: formData.password,
+          },
+          { withCredentials: true } 
+        );
+
+        if (response.status === 200) {
+          toast.dismiss(loadingToast);
+          toast.success("Sign in successful");
+          navigate('/todos');
+        }
+      } catch (error) {
+        console.error("Signin error:", error);
+        toast.dismiss(loadingToast);
+        const errorMessage = error.response?.data?.message || "An error occurred during sign-in. Please try again.";
+        toast.error(errorMessage);
+        setFormError(errorMessage); 
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [formData, validateForm, navigate]
+  );
+
+  const buttonClasses = useMemo(
+    () =>
+      `w-full py-2 px-4 font-medium text-white rounded ${
+        isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600"
+      }`,
+    [isLoading]
+  );
 
   return (
-    <section className="bg-white">
-      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-          <div className="flex justify-center mb-2">
-            <CoinWhizLogo />
-          </div>
-          <h2 className="text-2xl font-bold leading-tight text-center text-black">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-base text-center text-black">
-            Don't have an account?{' '}
-            <Link
-              to="/Signup"
-              title=""
-              className="font-medium text-black transition-all duration-200 hover:underline"
-            >
+    <div className="bg-gray-900 text-gray-200 min-h-[650px]">
+      <Toaster /> {/* For toast notifications */}
+      <div className="mx-auto max-w-[350px] space-y-6 p-4">
+        <div className="space-y-2 text-center">
+          <h1 className="text-3xl font-bold">Sign In</h1>
+          <p className="text-gray-600">
+            Not a User?{" "}
+            <Link to="/signup" className="text-blue-500">
               Sign Up
             </Link>
           </p>
-          <form onSubmit={handleSubmit} className="mt-8">
-            <div className="space-y-5">
-              <div>
-                <label htmlFor="email" className="text-base font-medium text-black">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    className="flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="email"
-                    placeholder="Email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="text-base font-medium text-black">
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    className="flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    placeholder="Password"
-                    id="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
+        </div>
+        <form onSubmit={onSubmit}>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="email" className="block font-medium">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-3 py-2 text-black border border-gray-300 rounded"
+              />
+              {formError && <p className="text-red-500 text-sm">{formError}</p>}
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="password" className="block font-medium">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 text-black border border-gray-300 rounded"
+                />
                 <button
-                  type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-gray-900 active:border-black"
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-2 text-sm text-gray-600"
                 >
-                  Sign In <ArrowRight className="ml-2" size={16} />
+                  {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
-              {error && <p className="mt-2 text-center text-red-600">{error}</p>}
             </div>
-          </form>
-        </div>
+            <button
+              className={buttonClasses}
+              type="submit"
+              disabled={isLoading}
+              aria-busy={isLoading}
+            >
+              {isLoading ? (
+                <svg
+                  className="animate-spin mr-2 h-4 w-4 text-white inline"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 0115.925 2.105A6 6 0 0012 22a6 6 0 000-12c-1.21 0-2.34.391-3.236 1.05A8 8 0 014 12z"
+                  />
+                </svg>
+              ) : null}
+              Sign In
+            </button>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
   );
 }
-
-export default Signin;

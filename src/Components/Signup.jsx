@@ -1,126 +1,176 @@
-import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { Client, Account, ID } from 'appwrite';
-import CoinWhizLogo from './ui/CoinWhizLogo';
+import { useState, useCallback, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
-function Signup() {
+export default function Signup() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+  });
+  const [formError, setFormError] = useState(null);
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
-  const [error, setError] = useState(null);
 
-  // Initialize Appwrite Client
-  const client = new Client()
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('66540918000ca5b96681');
-  const account = new Account(client);
-
-  // Handle form submission
-  const create = async (data) => {
-    setError(null);
-    try {
-      // Create account
-      const userAccount = await account.create(ID.unique(), data.email, data.password, data.name);
-      if (userAccount) {
-        // Log in the user
-        const session = await account.createEmailPasswordSession(data.email, data.password);
-        console.log(session);
-        navigate('/Signin');
-      }
-    } catch (error) {
-      console.error("Signup error:", error);
-      setError(error.message || "An error occurred while signing up.");
+  const validateForm = useCallback(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormError("Please enter a valid email address");
+      return false;
     }
+    setFormError(null);
+    return true;
+  }, [formData.email]);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      const loadingToast = toast.loading("Saving data...");
+
+      setIsLoading(true);
+
+      try {
+        console.log(formData);
+        const response = await axios.post("http://localhost:8080/api/signup", {
+          fullname: formData.fullname,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (response.status === 201) {
+          toast.success("Signup successful!");
+          setFormError(null);
+          navigate('/signin'); 
+        }
+      } catch (error) {
+        console.error("Signup error:", error);
+        setFormError("An error occurred during signup. Please try again.");
+        toast.error("Signup failed. Please try again.");
+      } finally {
+        toast.dismiss(loadingToast);
+        setIsLoading(false);
+      }
+    },
+    [formData, validateForm, navigate]
+  );
+
+  const buttonClasses = useMemo(
+    () =>
+      `w-full py-2 px-4 font-medium text-white rounded ${
+        isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600"
+      }`,
+    [isLoading]
+  );
+
   return (
-    <section className="bg-white">
-      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-          <div className="flex justify-center mb-2">
-            <CoinWhizLogo />
-          </div>
-          <h2 className="text-2xl font-bold leading-tight text-center text-black">
-            Sign up to create account
-          </h2>
-          <p className="mt-2 text-base text-center text-black">
-            Already have an account?{' '}
-            <Link
-              to="/Signin"
-              title=""
-              className="font-medium text-black transition-all duration-200 hover:underline"
-            >
+    <div className="bg-gray-900 text-gray-200 min-h-[650px]">
+      <Toaster />
+      <div className="mx-auto max-w-[350px] space-y-6 p-4">
+        <div className="space-y-2 text-center">
+          <h1 className="text-3xl font-bold">Sign Up</h1>
+          <p className="text-gray-600">
+            Already a User?{" "}
+            <Link to="/signin" className="text-blue-500">
               Sign In
             </Link>
           </p>
-          {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-          <form onSubmit={handleSubmit(create)} className="mt-8">
-            <div className="space-y-5">
-              <div>
-                <label htmlFor="name" className="text-base font-medium text-black">
-                  Full Name
-                </label>
-                <div className="mt-2">
-                  <input
-                    className="text-black flex w-full h-10 px-3 py-2 text-sm bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="text"
-                    placeholder="Full Name"
-                    id="name"
-                    {...register("name", { required: true })}
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="email" className="text-base font-medium text-black">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    className="flex w-full text-black h-10 px-3 py-2 text-sm bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="email"
-                    placeholder="Email"
-                    id="email"
-                    {...register("email", {
-                      required: true,
-                      pattern: {
-                        value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                        message: "Email address must be a valid address"
-                      }
-                    })}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="text-base font-medium text-black">
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    className="flex w-full text-black h-10 px-3 py-2 text-sm bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    placeholder="Password"
-                    id="password"
-                    {...register("password", { required: true })}
-                  />
-                </div>
-              </div>
-              <div>
+        </div>
+        <form onSubmit={onSubmit}>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="fullname" className="block font-medium">
+                Full Name
+              </label>
+              <input
+                id="fullname"
+                type="text"
+                placeholder="Enter Fullname"
+                required
+                value={formData.fullname}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border text-black border-gray-300 rounded"
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="email" className="block font-medium">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter Email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-3 py-2 text-black border border-gray-300 rounded"
+              />
+              {formError && <p className="text-red-500 text-sm">{formError}</p>}
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="password" className="block font-medium">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 text-black border border-gray-300 rounded"
+                />
                 <button
-                  type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-gray-800 active:border-gray-900"
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-2 text-sm text-gray-600"
                 >
-                  Create Account <ArrowRight className="ml-2" size={16} />
+                  {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
             </div>
-          </form>
-        </div>
+            <button
+              className={buttonClasses}
+              type="submit"
+              disabled={isLoading}
+              aria-busy={isLoading}
+            >
+              {isLoading ? (
+                <svg
+                  className="animate-spin mr-2 h-4 w-4 text-white inline"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  ></path>
+                </svg>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
   );
 }
-
-export default Signup;

@@ -28,13 +28,13 @@ export default function Watchlist() {
   };
 
   return (
-    <section className="w-full py-12">
+    <section className="w-full py-12 bg-gray-900 text-white min-h-[680px]">
       <Toaster />
-      <div className="container grid gap-6 md:gap-8 px-4 md:px-6 max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 mb-8">
           <div className="grid gap-1">
             <h1 className="text-3xl font-bold tracking-tight">Watchlist</h1>
-            <p className="text-gray-500">Track your favorite cryptocurrencies.</p>
+            <p className="text-gray-400">Track your favorite cryptocurrencies.</p>
           </div>
           <Button variant="outline" size="sm" onClick={handleAddCoin}>
             Add Coin
@@ -49,20 +49,21 @@ export default function Watchlist() {
           {watchlist.map((coin) => (
             <Card
               key={coin.id}
-              className="p-4 flex items-center justify-between bg-white shadow-md rounded-lg"
+              className="p-4 flex items-center justify-between bg-gray-800 shadow-md rounded-lg transition-transform duration-200 hover:scale-105"
             >
-              <CardHeader className="w-full">
+              <CardHeader className="w-full flex justify-between">
                 <div className="flex items-center gap-4">
+                  <img src={coin.image} alt={coin.coin} className="w-10 h-10" />
                   <div className="grid gap-1">
                     <div className="flex items-center gap-2">
                       <CardTitle className="font-medium text-lg">{coin.coin}</CardTitle>
-                      <div className="text-gray-500 text-sm">({coin.id.toUpperCase()})</div>
+                      <div className="text-gray-400 text-sm">({coin.id.toUpperCase()})</div>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="font-medium text-xl">${coin.current_price.toFixed(2)}</div>
                       <div
                         className={`px-2 py-0.5 rounded-md text-xs ${
-                          coin.current_price >= coin.low_24h ? "bg-green-200 text-green-700" : "bg-red-200 text-red-700"
+                          coin.current_price >= coin.low_24h ? "bg-green-600" : "bg-red-600"
                         }`}
                       >
                         ${coin.current_price.toFixed(2)}
@@ -74,8 +75,9 @@ export default function Watchlist() {
                   variant="ghost"
                   size="icon"
                   onClick={() => handleRemoveCoin(coin.id)}
+                  aria-label={`Remove ${coin.coin} from watchlist`}
                 >
-                  <XIcon className="h-5 w-5" />
+                  <XIcon className="h-5 w-5 text-red-400" />
                   <span className="sr-only">Remove {coin.coin}</span>
                 </Button>
               </CardHeader>

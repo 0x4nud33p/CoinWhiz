@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Dropdown from './Dropdown';
 import Skeleton from 'react-loading-skeleton';
 import { motion } from 'framer-motion';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -15,8 +14,6 @@ const Market = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState([]);
-  const [sortColumn, setSortColumn] = useState('');
-  const [sortDirection, setSortDirection] = useState('asc');
 
   useEffect(() => {
     if (crypto) {
@@ -28,24 +25,9 @@ const Market = () => {
     }
   }, [crypto, searchTerm]);
 
-  const handleSort = (column) => {
-    const direction =
-      sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
-    setSortDirection(direction);
-    setSortColumn(column);
-
-    const sorted = [...filteredCrypto].sort((a, b) => {
-      if (a[column] < b[column]) return direction === 'asc' ? -1 : 1;
-      if (a[column] > b[column]) return direction === 'asc' ? 1 : -1;
-      return 0;
-    });
-
-    setFilteredCrypto(sorted);
-  };
-
   if (!crypto) {
     return (
-      <div className="relative overflow-x-auto shadow-md p-6 bg-white text-black font-mono">
+      <div className="relative overflow-x-auto shadow-md p-6 bg-gray-900 text-gray-100">
         <Skeleton count={10} height={40} />
       </div>
     );
@@ -72,10 +54,10 @@ const Market = () => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
       transition={{ duration: 0.5 }}
-      className="overflow-hidden"
+      className="overflow-hidden bg-gray-900 text-gray-100 min-h-screen"
     >
-      <div className="relative overflow-x-auto shadow-md p-6 bg-white text-black font-mono">
-        <div className="pb-4 bg-white">
+      <div className="relative overflow-x-auto shadow-md p-6 bg-gray-900 text-white">
+        <div className="pb-4">
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -83,7 +65,7 @@ const Market = () => {
             <div className="relative mt-1">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg
-                  className="w-5 h-6 text-black"
+                  className="w-5 h-6 text-gray-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -101,7 +83,7 @@ const Market = () => {
               <input
                 type="text"
                 id="table-search"
-                className="flex pt-2 pl-10 h-10 px-3 py-2 w-full md:w-80 text-sm text-black bg-transparent border border-black rounded-md placeholder:text-black focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex pt-2 pl-10 h-10 px-3 py-2 w-full md:w-80 text-sm text-black bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -109,78 +91,18 @@ const Market = () => {
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded">
           <table className="w-full table-auto">
             <thead>
-              <tr className="bg-gray-200 text-gray-700">
-                <th className="px-4 py-2 cursor-pointer"></th>
-                <th className="px-4 py-2 cursor-pointer"></th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort('name')}
-                >
-                  Coin
-                  {sortColumn === 'name' && (
-                    <span className="ml-2">
-                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
-                    </span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort('symbol')}
-                >
-                  Symbol
-                  {sortColumn === 'symbol' && (
-                    <span className="ml-2">
-                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
-                    </span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort('current_price')}
-                >
-                  Price
-                  {sortColumn === 'current_price' && (
-                    <span className="ml-2">
-                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
-                    </span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort('high_24h')}
-                >
-                  24h High
-                  {sortColumn === 'high_24h' && (
-                    <span className="ml-2">
-                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
-                    </span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort('low_24h')}
-                >
-                  24h Low
-                  {sortColumn === 'low_24h' && (
-                    <span className="ml-2">
-                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
-                    </span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort('market_cap')}
-                >
-                  Market Cap
-                  {sortColumn === 'market_cap' && (
-                    <span className="ml-2">
-                      {sortDirection === 'asc' ? '\u25B2' : '\u25BC'}
-                    </span>
-                  )}
-                </th>
+              <tr className="bg-gray-700 text-gray-200">
+                <th className="px-4 py-2"></th>
+                <th className="px-4 py-2">Icon</th>
+                <th className="px-4 py-2">Coin</th>
+                <th className="px-4 py-2">Symbol</th>
+                <th className="px-4 py-2">Price</th>
+                <th className="px-4 py-2">24h High</th>
+                <th className="px-4 py-2">24h Low</th>
+                <th className="px-4 py-2">Market Cap</th>
               </tr>
             </thead>
             <tbody>
@@ -190,13 +112,13 @@ const Market = () => {
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="border-b bg-white border-gray-200 hover:bg-gray-200"
+                  className="border-b bg-gray-800 hover:bg-gray-700"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
-                        className="form-checkbox h-5 w-5"
+                        className="form-checkbox h-5 w-5 text-blue-500"
                         onChange={(event) => handleCheckboxChange(event, crypto)}
                       />
                     </div>
@@ -211,18 +133,20 @@ const Market = () => {
                     />
                   </td>
                   <td className="px-6 py-4">{crypto.name}</td>
-                  <td className="px-6 py-4">{crypto.symbol}</td>
-                  <td className="px-6 py-4">${crypto.current_price}</td>
-                  <td className="px-6 py-4">${crypto.high_24h}</td>
-                  <td className="px-6 py-4">${crypto.low_24h}</td>
-                  <td className="px-6 py-4">${crypto.market_cap}</td>
+                  <td className="px-6 py-4">{crypto.symbol.toUpperCase()}</td>
+                  <td className="px-6 py-4">${crypto.current_price.toFixed(2)}</td>
+                  <td className="px-6 py-4">${crypto.high_24h.toFixed(2)}</td>
+                  <td className="px-6 py-4">${crypto.low_24h.toFixed(2)}</td>
+                  <td className="px-6 py-4">${crypto.market_cap.toLocaleString()}</td>
                 </motion.tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center bg-white p-2">
+
+      {/* Pagination */}
+      <div className="flex justify-center bg-gray-800 p-4">
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -230,11 +154,12 @@ const Market = () => {
           onClick={() => handleClick(currentPage - 1)}
           disabled={currentPage === 1}
           className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
-            currentPage === 1 ? 'bg-gray-200 text-gray-500' : 'bg-black text-white hover:bg-gray-500'
+            currentPage === 1 ? 'bg-gray-500 text-gray-400' : 'bg-blue-500 text-white hover:bg-blue-400'
           }`}
         >
           Previous
         </motion.button>
+
         {Array.from({ length: totalPages }, (_, index) => (
           <motion.button
             key={index + 1}
@@ -244,13 +169,14 @@ const Market = () => {
             onClick={() => handleClick(index + 1)}
             className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
               currentPage === index + 1
-                ? 'bg-gray-500 text-white'
-                : 'bg-white text-black hover:bg-gray-300'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
             {index + 1}
           </motion.button>
         ))}
+
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -258,7 +184,7 @@ const Market = () => {
           onClick={() => handleClick(currentPage + 1)}
           disabled={currentPage === totalPages}
           className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
-            currentPage === totalPages ? 'bg-gray-200 text-gray-500' : 'bg-black text-white hover:bg-gray-500'
+            currentPage === totalPages ? 'bg-gray-500 text-gray-400' : 'bg-blue-500 text-white hover:bg-blue-400'
           }`}
         >
           Next

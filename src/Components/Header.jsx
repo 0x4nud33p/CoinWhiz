@@ -1,115 +1,63 @@
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { Signup, Signin, Watchlist } from '../Exports';
-import CoinWhizLogo from './ui/CoinWhizLogo';
-
-const menuItems = [
-  { name: 'Market' },
-  { name: 'Watchlist' },
-  { name: 'Chart' },
-];
+import { Menu, X } from 'lucide-react';
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsOpen(!isOpen);
   };
 
-  const isUserLoggedIn = () => true; 
   return (
-    <>
-      <div className="relative w-full p-2 bg-white lg:p-6 font-mono text-black">
-        <div className="flex items-center justify-between px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="inline-flex items-center space-x-2">
-            <span>
-              <CoinWhizLogo />
-            </span>
-            <Link to={'/Home'}>
-              <span className="font-bold text-xl text-black">CoinWhiz</span>
+    <div className="bg-gray-900 text-gray-100">
+      <header className="p-4 bg-gray-800">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link to="/" className="text-2xl font-bold text-blue-500">
+            CoinWhiz
+          </Link>
+
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex space-x-4">
+            <Link to="/" className="hover:text-blue-500 transition-colors">
+              Home
             </Link>
-          </div>
-          <div className="items-start hidden grow lg:flex">
-            <ul className="inline-flex ml-12 space-x-8">
-              {menuItems.map((item) => (
-                <li key={item.name}>
-                  <Link to={`/${item.name}`} className="inline-flex items-center text-sm font-semibold text-black hover:text-gray-600">
-                    <span className="ml-3 text-base font-medium text-black">{item.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="hidden space-x-2 lg:block">
-            {isUserLoggedIn() ? (
-              <Link to={'/Signup'}>
-                <button type="button" className="px-3 py-2 text-sm font-semibold text-black border border-black rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign Up</button>
-              </Link>
-            ) : (
-              <Link to={'/Signin'}>
-                <button type="button" className="px-3 py-2 text-sm font-semibold text-black bg-transparent rounded-md hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign In</button>
-              </Link>
-            )}
-          </div>
-          <div className="lg:hidden">
-            <Menu onClick={toggleMenu} className="w-6 h-6 cursor-pointer text-black" />
-          </div>
-          {isMenuOpen && (
-            <div className="absolute inset-x-0 top-0 z-50 p-2 transition origin-top-right transform lg:hidden">
-              <div className="bg-white divide-y-2 rounded-lg shadow-lg divide-black ring-1 ring-black ring-opacity-5">
-                <div className="px-5 pt-5 pb-6">
-                  <div className="flex items-center justify-between">
-                    <div className="inline-flex items-center space-x-2">
-                      <span>
-                        <CoinWhizLogo />
-                      </span>
-                      <span className="font-bold text-xl text-black">CryptoWhiz</span>
-                    </div>
-                    <div className="-mr-2">
-                      <button type="button" onClick={toggleMenu} className="inline-flex items-center justify-center p-2 text-black rounded-md hover:bg-black hover:text-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
-                        <span className="sr-only">Close menu</span>
-                        <X className="w-6 h-6" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <nav className="grid gap-y-4">
-                      {menuItems.map((item) => (
-                        <Link key={item.name} to={`/${item.name}`} className="flex items-center p-3 -m-3 text-sm font-semibold rounded-md hover:bg-black/10">
-                          <span className="ml-3 text-base font-medium text-black">{item.name}</span>
-                        </Link>
-                      ))}
-                    </nav>
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    <Link to={'/Signup'}>
-                      <button type="button" className="text-white w-full px-3 py-2 text-sm font-semibold bg-black rounded-md shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Sign Up</button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+            <Link to="/market" className="hover:text-blue-500 transition-colors">
+              Markets
+            </Link>
+            <Link to="/watchlist" className="hover:text-blue-500 transition-colors">
+              Watchlist
+            </Link>
+            <Link to="/about" className="hover:text-blue-500 transition-colors">
+              About
+            </Link>
+          </nav>
+
+          {/* Hamburger Button */}
+          <button onClick={toggleMenu} className="md:hidden focus:outline-none">
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
-      </div>
-      <Toaster
-        toastOptions={{
-          success: {
-            style: {
-              background: 'white',
-              color: 'black',
-            },
-          },
-          error: {
-            style: {
-              background: 'red',
-            },
-          },
-        }}
-      />
-    </>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <nav className="md:hidden mt-4 space-y-2">
+            <Link to="/" className="block hover:text-blue-500 transition-colors">
+              Home
+            </Link>
+            <Link to="/markets" className="block hover:text-blue-500 transition-colors">
+              Markets
+            </Link>
+            <Link to="/trade" className="block hover:text-blue-500 transition-colors">
+              Trade
+            </Link>
+            <Link to="/about" className="block hover:text-blue-500 transition-colors">
+              About
+            </Link>
+          </nav>
+        )}
+      </header>
+    </div>
   );
 }
 

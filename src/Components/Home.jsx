@@ -1,118 +1,42 @@
-import { Header,Herocomponent,Market} from '../Exports'
-import {Info} from '../Exports'
+"use client"
 
-function Home() {
+import React from "react"
+import MyCarousel from "./MyCarousel"
+import { Link } from "react-router-dom"
+import { Menu, X } from 'lucide-react';
 
+export default function Home() {
   return (
-    <>
-    <div >
-    <Herocomponent />
-    <section className="container mx-auto px-4">
-        <div className="space-y-6">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Features</h2>
-            <p className="mt-4 text-muted-foreground md:text-xl">
-              Discover the powerful features that make our crypto price tracker the best in the market.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-lg bg-card p-6 shadow-sm">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <LineChartIcon className="h-6 w-6" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Real-Time Prices</h3>
-              <p className="text-muted-foreground">Get up-to-the-minute cryptocurrency prices and market data.</p>
-            </div>
-            <div className="rounded-lg bg-card p-6 shadow-sm">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <BarChartIcon className="h-6 w-6" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Detailed Analytics</h3>
-              <p className="text-muted-foreground">
-                Analyze market trends and historical data with our advanced analytics tools.
-              </p>
-            </div>
-            <div className="rounded-lg bg-card p-6 shadow-sm">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <PieChartIcon className="h-6 w-6" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Portfolio Tracking</h3>
-              <p className="text-muted-foreground">
-                Monitor your cryptocurrency investments and track your portfolio performance.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      <main className="container mx-auto px-4 py-8">
+        <section className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            Welcome to <span className="text-blue-500">CoinWhiz</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-400 mb-8">
+            "Stay Ahead of the Market with CoinWhiz"
+          </p>
+        </section>
+        <section className="mb-12">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-center">
+            Live Crypto Prices
+          </h2>
+          <MyCarousel />
+        </section>
+        <section className="text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+            Ready to dive into crypto?
+          </h2>
+          <p className="text-gray-400 mb-8">
+            Join CoinWhiz today and start your cryptocurrency journey!
+          </p>
+          <Link to="/signup">
+          <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white">
+            Sign Up Now
+          </button>
+          </Link>
+        </section>
+      </main>
     </div>
-    <div>
-    <Info />
-    </div>
-    </>
   )
 }
-
-function BarChartIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" x2="12" y1="20" y2="10" />
-      <line x1="18" x2="18" y1="20" y2="4" />
-      <line x1="6" x2="6" y1="20" y2="16" />
-    </svg>
-  )
-}
-
-
-function LineChartIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 3v18h18" />
-      <path d="m19 9-5 5-4-4-3 3" />
-    </svg>
-  )
-}
-
-
-function PieChartIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
-      <path d="M22 12A10 10 0 0 0 12 2v10z" />
-    </svg>
-  )
-}
-
-export default Home
