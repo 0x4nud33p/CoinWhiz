@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { motion } from 'framer-motion';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
@@ -49,13 +48,7 @@ const Market = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -100 }}
-      transition={{ duration: 0.5 }}
-      className="overflow-hidden bg-gray-900 text-gray-100 min-h-screen"
-    >
+    <div className="overflow-hidden bg-gray-900 text-gray-100 min-h-screen">
       <div className="relative overflow-x-auto shadow-md p-6 bg-gray-900 text-white">
         <div className="pb-4">
           <label htmlFor="table-search" className="sr-only">
@@ -91,7 +84,7 @@ const Market = () => {
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto rounded">
+        <div className="overflow-x-auto rounded-xl">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-700 text-gray-200">
@@ -107,11 +100,8 @@ const Market = () => {
             </thead>
             <tbody>
               {currentItems.map((crypto) => (
-                <motion.tr
+                <tr
                   key={crypto.id}
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
                   className="border-b bg-gray-800 hover:bg-gray-700"
                 >
                   <td className="w-4 p-4">
@@ -138,7 +128,7 @@ const Market = () => {
                   <td className="px-6 py-4">${crypto.high_24h.toFixed(2)}</td>
                   <td className="px-6 py-4">${crypto.low_24h.toFixed(2)}</td>
                   <td className="px-6 py-4">${crypto.market_cap.toLocaleString()}</td>
-                </motion.tr>
+                </tr>
               ))}
             </tbody>
           </table>
@@ -146,11 +136,8 @@ const Market = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center bg-gray-800 p-4">
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+      <div className="flex justify-center bg-gray-900 p-4">
+        <button
           onClick={() => handleClick(currentPage - 1)}
           disabled={currentPage === 1}
           className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
@@ -158,14 +145,11 @@ const Market = () => {
           }`}
         >
           Previous
-        </motion.button>
+        </button>
 
         {Array.from({ length: totalPages }, (_, index) => (
-          <motion.button
+          <button
             key={index + 1}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: (index + 1) * 0.1 }}
             onClick={() => handleClick(index + 1)}
             className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
               currentPage === index + 1
@@ -174,13 +158,10 @@ const Market = () => {
             }`}
           >
             {index + 1}
-          </motion.button>
+          </button>
         ))}
 
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+        <button
           onClick={() => handleClick(currentPage + 1)}
           disabled={currentPage === totalPages}
           className={`mx-1 my-2 px-4 py-2 rounded-md text-sm font-medium ${
@@ -188,9 +169,9 @@ const Market = () => {
           }`}
         >
           Next
-        </motion.button>
+        </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
