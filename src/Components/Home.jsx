@@ -4,12 +4,10 @@ import React from "react"
 import MyCarousel from "./MyCarousel"
 import { Link } from "react-router-dom"
 import { Menu, X } from 'lucide-react';
-import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
-      <Toaster />
       <main className="container mx-auto px-4 py-8">
         <section className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">

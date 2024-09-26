@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -9,14 +9,12 @@ const MyCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
 
-
   useEffect(() => {
     const timer = setInterval(() => {
       handleNextCrypto();
     }, 3000);
     return () => clearInterval(timer);
   }, [crypto]);
-
 
   const handleNextCrypto = () => {
     setIsChanging(true);
@@ -25,7 +23,6 @@ const MyCarousel = () => {
       setIsChanging(false);
     }, 500);
   };
-
 
   const animationVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -68,6 +65,20 @@ const MyCarousel = () => {
                 transition={{ duration: 0.5 }}
               >
                 ${crypto[currentIndex].current_price.toLocaleString()}
+              </motion.p>
+              <motion.p
+                className={`text-sm font-bold ${
+                  crypto[currentIndex].price_change_percentage_24h >= 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+                initial="hidden"
+                animate={isChanging ? "exit" : "visible"}
+                exit="exit"
+                variants={animationVariants}
+                transition={{ duration: 0.5 }}
+              >
+                {crypto[currentIndex].price_change_percentage_24h.toFixed(2)}%
               </motion.p>
             </div>
           </div>
