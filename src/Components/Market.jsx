@@ -4,6 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
 import { useDispatch } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 
 const Market = () => {
   const { crypto } = useContext(CryptoContext);
@@ -49,6 +50,7 @@ const Market = () => {
 
   return (
     <div className="overflow-hidden bg-gray-900 text-gray-100 min-h-screen">
+      <Toaster />
       <div className="relative overflow-x-auto shadow-md p-6 bg-gray-900 text-white">
         <div className="pb-4">
           <label htmlFor="table-search" className="sr-only">

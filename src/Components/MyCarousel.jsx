@@ -13,7 +13,7 @@ const MyCarousel = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       handleNextCrypto();
-    }, 2000);
+    }, 3000);
     return () => clearInterval(timer);
   }, [crypto]);
 
