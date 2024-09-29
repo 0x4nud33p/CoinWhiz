@@ -5,14 +5,15 @@ import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
 import { useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { NavLink, useNavigate } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa';
 
 const Market = () => {
   const { crypto } = useContext(CryptoContext);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState([]);
@@ -27,14 +28,16 @@ const Market = () => {
     }
   }, [crypto, searchTerm]);
 
+
   if (!crypto) {
     return (
-      <div className="relative overflow-x-auto shadow-md p-6 bg-gray-900 text-gray-100">
-        <Skeleton count={10} height={40} />
+      <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
+        <FaSpinner className="animate-spin text-3xl text-blue-500" />
       </div>
     );
   }
 
+  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredCrypto.slice(indexOfFirstItem, indexOfLastItem);
@@ -51,7 +54,7 @@ const Market = () => {
   };
 
   const handleCoinClick = (id) => {
-    navigate(`/coin/${id}`); // Use navigate to go to CoinChart
+    navigate(`/coin/${id}`); 
   };
 
   return (
@@ -111,7 +114,7 @@ const Market = () => {
                 <tr
                   key={crypto.id}
                   className="border-b bg-gray-800 hover:bg-gray-700 cursor-pointer"
-                  onClick={() => handleCoinClick(crypto.id)} // Add onClick to navigate
+                  onClick={() => handleCoinClick(crypto.id)}
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -124,19 +127,19 @@ const Market = () => {
                   </td>
                   <td className="px-6 py-4">
                     <img
-                      src={crypto.image}
-                      alt={crypto.name}
+                      src={crypto?.image} 
+                      alt={crypto?.name}
                       width="30"
                       height="30"
                       className="rounded-full"
                     />
                   </td>
-                  <td className="px-6 py-4">{crypto.name}</td>
-                  <td className="px-6 py-4">{crypto.symbol.toUpperCase()}</td>
-                  <td className="px-6 py-4">${crypto.current_price.toFixed(2)}</td>
-                  <td className="px-6 py-4">${crypto.high_24h.toFixed(2)}</td>
-                  <td className="px-6 py-4">${crypto.low_24h.toFixed(2)}</td>
-                  <td className="px-6 py-4">${crypto.market_cap.toLocaleString()}</td>
+                  <td className="px-6 py-4">{crypto?.name}</td>
+                  <td className="px-6 py-4">{crypto?.symbol?.toUpperCase()}</td> 
+                  <td className="px-6 py-4">${crypto?.current_price?.toFixed(2)}</td>
+                  <td className="px-6 py-4">${crypto?.high_24h?.toFixed(2)}</td>
+                  <td className="px-6 py-4">${crypto?.low_24h?.toFixed(2)}</td> 
+                  <td className="px-6 py-4">${crypto?.market_cap?.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -144,7 +147,7 @@ const Market = () => {
         </div>
       </div>
 
-      {/* Pagination */}
+    
       <div className="flex justify-center bg-gray-900 p-4">
         <button
           onClick={() => handleClick(currentPage - 1)}

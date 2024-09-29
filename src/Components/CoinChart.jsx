@@ -6,11 +6,11 @@ import { CryptoContext } from '../Api/CryptoContext';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Chart, registerables } from 'chart.js';
-import { FaSpinner } from 'react-icons/fa'; // Import loading spinner icon
+import { FaSpinner } from 'react-icons/fa'; 
 
-Chart.register(...registerables); // Register Chart.js components
+Chart.register(...registerables);
 
-// Timeframes for chart data
+
 export const chartDays = [
   { label: "24 Hours", value: 1 },
   { label: "30 Days", value: 30 },
@@ -19,20 +19,20 @@ export const chartDays = [
 ];
 
 const CoinChart = () => {
-  const { id } = useParams(); // Get coin ID from URL
+  const { id } = useParams(); 
   const { crypto } = useContext(CryptoContext);
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [days, setDays] = useState(30); // Default to 30 days
+  const [days, setDays] = useState(30); 
 
-  // Function to fetch coin data
+
   const fetchCoinData = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`);
-      const prices = response?.data?.prices; // Using optional chaining
+      const prices = response?.data?.prices;
 
-      // Prepare data for the chart
+      
       const labels = prices.map(price => new Date(price[0]).toLocaleDateString());
       const data = prices.map(price => price[1]);
 
@@ -53,12 +53,11 @@ const CoinChart = () => {
     }
   };
 
-  // Fetch data when coin ID or days change
   useEffect(() => {
     fetchCoinData();
   }, [id, days]);
 
-  // Loading spinner component
+
   const renderLoader = () => (
     <div className="flex justify-center items-center h-64">
       <FaSpinner className="animate-spin text-3xl text-blue-500" />
@@ -69,7 +68,6 @@ const CoinChart = () => {
     <div className="bg-gray-900 text-white p-4 sm:p-6 md:p-8 lg:p-10">
       <h2 className="text-2xl mb-4 text-center">Price Chart for {id.toUpperCase()}</h2>
 
-      {/* Buttons to select the time frame */}
       <div className="mb-4 flex flex-wrap justify-center">
         {chartDays.map((day) => (
           <button
@@ -85,7 +83,7 @@ const CoinChart = () => {
       </div>
 
       {loading ? (
-        renderLoader() // Show loading spinner while fetching data
+        renderLoader()
       ) : (
         chartData && (
           <div style={{ position: 'relative', height: '300px', width: '100%' }}>

@@ -20,7 +20,6 @@ function Header() {
             CoinWhiz
           </NavLink>
 
-          {/* Desktop Menu */}
           <nav className="hidden md:flex space-x-4">
             <NavLink
               to="/"
@@ -56,13 +55,13 @@ function Header() {
             </NavLink>
           </nav>
 
-          {/* Hamburger Button */}
+       
           <button onClick={toggleMenu} className="md:hidden focus:outline-none">
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+       
         {isOpen && (
           <motion.nav
             initial={{ opacity: 0, y: -10 }}

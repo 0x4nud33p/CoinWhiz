@@ -74,7 +74,7 @@ export default function Signin() {
 
   return (
     <div className="bg-gray-900 text-gray-200 min-h-[650px]">
-      <Toaster /> {/* For toast notifications */}
+      <Toaster />
       <div className="mx-auto max-w-[350px] space-y-6 p-4">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">Sign In</h1>
