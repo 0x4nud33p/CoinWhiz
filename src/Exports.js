@@ -6,6 +6,7 @@ import Signup from './Components/Signup';
 import Watchlist from './Components/Watchlist';
 import Chart from './Components/Chart';
 import About from './Components/ui/About';
+import CoinChart from './Components/CoinChart';
 
 export {
   Header,
@@ -15,5 +16,6 @@ export {
   Signup,
   Watchlist,
   Chart,
-  About
+  About,
+  CoinChart 
 };

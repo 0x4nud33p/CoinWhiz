@@ -5,12 +5,14 @@ import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
 import { useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
+import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Market = () => {
   const { crypto } = useContext(CryptoContext);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState([]);
@@ -46,6 +48,10 @@ const Market = () => {
     if (event.target.checked) {
       dispatch(addCoin(coin));
     }
+  };
+
+  const handleCoinClick = (id) => {
+    navigate(`/coin/${id}`); // Use navigate to go to CoinChart
   };
 
   return (
@@ -104,7 +110,8 @@ const Market = () => {
               {currentItems.map((crypto) => (
                 <tr
                   key={crypto.id}
-                  className="border-b bg-gray-800 hover:bg-gray-700"
+                  className="border-b bg-gray-800 hover:bg-gray-700 cursor-pointer"
+                  onClick={() => handleCoinClick(crypto.id)} // Add onClick to navigate
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
