@@ -1,5 +1,3 @@
-// components/ui/table.js
-
 export const Table = ({ children }) => {
     return (
       <div className="overflow-x-auto">
