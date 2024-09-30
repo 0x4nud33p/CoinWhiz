@@ -8,7 +8,7 @@ export const Card = ({ children, className }) => {
 
 export const CardHeader = ({ children, className }) => {
   return (
-    <div className={`flex items-center justify-between ${className}`}>
+    <div className={`flex items-center justify-between w-full ${className}`}>
       {children}
     </div>
   );
