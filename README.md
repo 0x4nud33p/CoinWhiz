@@ -7,7 +7,6 @@ CoinWhiz is a front-end cryptocurrency price tracking application built with Rea
 - **User Authentication**: Secure sign-up and login functionality to personalize user experience.
 - **Real-Time Price Updates**: Live tracking of cryptocurrency prices with frequent updates.
 - **Detailed Charts**: Interactive charts to visualize cryptocurrency price trends and historical data.
-- **News Feed**: Integration of a news feed for the latest cryptocurrency market news and trends.
 - **Dark Mode**: A dark mode option to enhance usability in low-light conditions.
 - **Customizable Dashboard Widgets**: Users can customize their dashboard with widgets of their choice.
 
@@ -17,7 +16,6 @@ CoinWhiz is a front-end cryptocurrency price tracking application built with Rea
 - **Redux**: For state management.
 - **Chart.js**: For rendering interactive charts.
 - **Axios**: For making HTTP requests.
-- **Firebase**: For user authentication (if applicable).
 - **Tailwind CSS**: For styling (if applicable).
 
 ## Installation
