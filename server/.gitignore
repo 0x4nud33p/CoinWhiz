@@ -1,0 +1,58 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Build directories
+dist/
+build/
+coverage/
+.nyc_output/
+out/
+
+# Optional npm cache directory
+.npm
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Optional debug files
+*.stackdump
+
+# IDE/Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Temporary files
+tmp/
+temp/
+*.swp
+
+# Lint cache
+.eslintcache
+
+# Optional lock files
+package-lock.json
+yarn.lock
+
+# Ignore testing-related files
+.jest/
+.cypress/
