@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X,User  } from 'lucide-react'; 
 import { motion } from 'framer-motion';
 
 function Header() {
@@ -9,8 +9,8 @@ function Header() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const activeLinkClass = "relative text-black hover:text-gray-400 cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-blue-500 before:origin-center before:h-[3px] before:w-0 hover:before:w-[50%] before:bottom-[-4px] before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-blue-500 after:origin-center after:h-[3px] after:w-0 hover:after:w-[50%] after:bottom-[-4px] after:right-[50%] text-blue-500";
 
+  const activeLinkClass = "relative text-black hover:text-gray-400 cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-blue-500 before:origin-center before:h-[3px] before:w-0 hover:before:w-[50%] before:bottom-[-4px] before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-blue-500 after:origin-center after:h-[3px] after:w-0 hover:after:w-[50%] after:bottom-[-4px] after:right-[50%] text-blue-500";
 
   return (
     <div className="bg-gray-900 text-gray-100">
@@ -19,6 +19,7 @@ function Header() {
           <NavLink to="/" className="text-2xl font-bold text-blue-500">
             CoinWhiz
           </NavLink>
+
 
           <nav className="hidden md:flex space-x-4">
             <NavLink
@@ -53,6 +54,20 @@ function Header() {
             >
               About
             </NavLink>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive ? activeLinkClass : 'hover:text-blue-500 transition-colors'
+              }
+            >
+           
+              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+              
+                <span className="font-bold">
+                  <User className="w-5 h-5 text-white" />
+                </span>
+              </div>
+            </NavLink>
           </nav>
 
        
@@ -61,7 +76,7 @@ function Header() {
           </button>
         </div>
 
-       
+
         {isOpen && (
           <motion.nav
             initial={{ opacity: 0, y: -10 }}
@@ -100,6 +115,19 @@ function Header() {
               }
             >
               About
+            </NavLink>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive ? activeLinkClass : 'block hover:text-blue-500 transition-colors'
+              }
+            >
+        
+              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                <span className="font-bold">
+                  <User className="w-5 h-5 text-white" />
+                </span>
+              </div>
             </NavLink>
           </motion.nav>
         )}

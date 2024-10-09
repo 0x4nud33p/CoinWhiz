@@ -7,7 +7,7 @@ import Home from './Components/Home.jsx'
 import Layout from './Layout/Layout.jsx';
 import { Toaster } from 'react-hot-toast';
 import { CryptoProvider } from './Api/CryptoContext.jsx';
-import { Market,Signin,Signup,Watchlist,About,CoinChart } from './Exports.js';
+import { Market,Signin,Signup,Watchlist,About,CoinChart,UserProfile } from './Exports.js';
 import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 
 
@@ -21,6 +21,7 @@ const router = createBrowserRouter(
       <Route path='/signin' element={<Signin />} />
       <Route path='/watchlist' element={<Watchlist />} />
       <Route path='/about' element={<About />} />
+      <Route path='/profile' element={<UserProfile />} />
       <Route path='/coin/:id' element={<CoinChart />} />
     </Route>
   )
