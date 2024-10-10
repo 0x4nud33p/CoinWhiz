@@ -1,12 +1,10 @@
-import { ArrowUpRight, ArrowDownRight, Star, Activity } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Star } from "lucide-react";
 import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken ";
 
 export default function UserProfile() {
-
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const userinfo = getUserInfoFromToken(token);
-  const defaultPic = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."; 
-
+  
   const activities = [
     { action: "Bought", crypto: "Bitcoin", amount: "0.5 BTC", date: "2 days ago" },
     { action: "Sold", crypto: "Ethereum", amount: "1.2 ETH", date: "1 week ago" },
@@ -17,15 +15,16 @@ export default function UserProfile() {
     <div className="w-full p-4 bg-gray-900 text-gray-100 min-h-[670px]">
       <div className="w-full rounded-lg shadow-sm">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-4">
-          <div className="w-24 h-24 rounded-full overflow-hidden">
-            <img
-              src={defaultPic}
-              alt="User"
-              className="w-full h-full object-cover"
-            />
+          <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-blue-600 flex items-center justify-center overflow-hidden">
+            {/* Placeholder for profile icon */}
+            <span className="text-white text-3xl sm:text-4xl">
+              {userinfo ? userinfo.email.charAt(0).toUpperCase() : "U"}
+            </span>
           </div>
           <div className="text-center sm:text-left">
-            <h2 className="text-2xl font-semibold">{userinfo ? userinfo.email : "User not logged in"}</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold">
+              {userinfo ? userinfo.email : "User not logged in"}
+            </h2>
             <p className="text-sm text-gray-400">Crypto Enthusiast</p>
           </div>
         </div>
