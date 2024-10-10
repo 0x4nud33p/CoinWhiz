@@ -38,18 +38,18 @@ export default function Signin() {
 
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/signin",
+          "http://localhost:5050/api/signin",
           {
             email: formData.email,
             password: formData.password,
-          },
-          { withCredentials: true } 
+          }
         );
 
         if (response.status === 200) {
           toast.dismiss(loadingToast);
           toast.success("Sign in successful");
-          navigate('/todos');
+          localStorage.setItem('token',response.data.token)
+          navigate('/profile');
         }
       } catch (error) {
         console.error("Signin error:", error);
