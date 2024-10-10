@@ -1,9 +1,11 @@
 import React from "react";
 import MyCarousel from "./MyCarousel";
 import { Link } from "react-router-dom";
-import { Footer } from "./Footer"; // Import Footer
+import { Footer } from "./Footer";
 
 export default function Home() {
+  const token = localStorage.getItem('token');
+
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen flex flex-col justify-between">
       <main className="container mx-auto px-4 py-8 flex-grow">
@@ -28,11 +30,13 @@ export default function Home() {
           <p className="text-gray-400 mb-8">
             Join CoinWhiz today and start your cryptocurrency journey!
           </p>
-          <Link to="/signup">
-            <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white">
-              Sign Up Now
-            </button>
-          </Link>
+          {!token && (
+            <Link to="/signup">
+              <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white">
+                Sign Up Now
+              </button>
+            </Link>
+          )}
         </section>
       </main>
     </div>
