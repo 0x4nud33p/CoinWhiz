@@ -47,7 +47,7 @@ export default function Signup() {
         });
 
         if (response.status === 201) {
-          toast.success("Signup successful!");
+          toast.success("Signup successful! Please Login");
           setFormError(null);
           navigate('/signin'); 
         }
