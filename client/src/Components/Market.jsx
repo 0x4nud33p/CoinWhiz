@@ -46,10 +46,12 @@ const Market = () => {
   };
 
   const handleCheckboxChange = (event, coin) => {
-    if (event.target.checked) {
-      dispatch(addCoin(coin));
-    }
-  };
+  event.stopPropagation();
+  if (event.target.checked) {
+    dispatch(addCoin(coin));
+  }
+};
+
 
   const handleCoinClick = (id) => {
     navigate(`/coin/${id}`);
@@ -120,6 +122,7 @@ const Market = () => {
                         type="checkbox"
                         className="form-checkbox h-5 w-5 text-blue-500"
                         onChange={(event) => handleCheckboxChange(event, crypto)}
+                        onClick={(event) => event.stopPropagation()} 
                       />
                     </div>
                   </td>

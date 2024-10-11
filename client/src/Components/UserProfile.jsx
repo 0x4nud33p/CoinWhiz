@@ -5,11 +5,11 @@ export default function UserProfile() {
   const token = localStorage.getItem("token");
   const userinfo = getUserInfoFromToken(token);
   
-  const activities = [
-    { action: "Bought", crypto: "Bitcoin", amount: "0.5 BTC", date: "2 days ago" },
-    { action: "Sold", crypto: "Ethereum", amount: "1.2 ETH", date: "1 week ago" },
-    { action: "Received", crypto: "Dogecoin", amount: "1000 DOGE", date: "3 weeks ago" }
-  ];
+  // const activities = [
+  //   { action: "Bought", crypto: "Bitcoin", amount: "0.5 BTC", date: "2 days ago" },
+  //   { action: "Sold", crypto: "Ethereum", amount: "1.2 ETH", date: "1 week ago" },
+  //   { action: "Received", crypto: "Dogecoin", amount: "1000 DOGE", date: "3 weeks ago" }
+  // ];
 
   return (
     <div className="w-full p-4 bg-gray-900 text-gray-100 min-h-[670px]">
@@ -29,7 +29,7 @@ export default function UserProfile() {
           </div>
         </div>
 
-        <div className="p-4">
+        {/* <div className="p-4">
           <div className="rounded-lg p-4 shadow-sm mt-6 bg-gray-800">
             <h3 className="text-lg font-semibold">Recent Activity</h3>
             <ul className="space-y-4 mt-2">
@@ -55,7 +55,7 @@ export default function UserProfile() {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
