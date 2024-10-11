@@ -1,5 +1,4 @@
-"use client";
-
+// Watchlist Component
 import { useSelector, useDispatch } from "react-redux";
 import { addCoin, removeCoin } from "../Store/watchlistslice";
 import { Button } from "../Components/ui/Button";
@@ -23,7 +22,8 @@ export default function Watchlist() {
     }));
   };
 
-  const handleRemoveCoin = (id) => {
+  const handleRemoveCoin = (id, event) => {
+    event.stopPropagation(); 
     dispatch(removeCoin(id));
   };
 
@@ -31,7 +31,6 @@ export default function Watchlist() {
     <section className="w-full py-12 bg-gray-900 text-white min-h-[680px]">
       <Toaster />
       <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-        {/* Header section */}
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 mb-8">
           <div className="grid gap-1">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Watchlist</h1>
@@ -43,8 +42,6 @@ export default function Watchlist() {
             </Button>
           </Link>
         </div>
-
-        {/* Watchlist items */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {watchlist.map((coin) => (
             <Card
@@ -78,7 +75,7 @@ export default function Watchlist() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleRemoveCoin(coin.id)}
+                  onClick={(event) => handleRemoveCoin(coin.id, event)}
                   aria-label={`Remove ${coin.coin} from watchlist`}
                 >
                   <XIcon className="h-5 w-5 md:h-6 md:w-6 text-red-400 transition-transform duration-200 hover:scale-110" />
@@ -92,6 +89,7 @@ export default function Watchlist() {
     </section>
   );
 }
+
 
 function XIcon(props) {
   return (
@@ -112,3 +110,5 @@ function XIcon(props) {
     </svg>
   );
 }
+
+

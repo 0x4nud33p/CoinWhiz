@@ -5,11 +5,11 @@ export default function UserProfile() {
   const token = localStorage.getItem("token");
   const userinfo = getUserInfoFromToken(token);
   
-  // const activities = [
-  //   { action: "Bought", crypto: "Bitcoin", amount: "0.5 BTC", date: "2 days ago" },
-  //   { action: "Sold", crypto: "Ethereum", amount: "1.2 ETH", date: "1 week ago" },
-  //   { action: "Received", crypto: "Dogecoin", amount: "1000 DOGE", date: "3 weeks ago" }
-  // ];
+  const activities = [
+    { action: "Bought", crypto: "Bitcoin", amount: "0.5 BTC", date: "2 days ago" },
+    { action: "Sold", crypto: "Ethereum", amount: "1.2 ETH", date: "1 week ago" },
+    { action: "Received", crypto: "Dogecoin", amount: "1000 DOGE", date: "3 weeks ago" }
+  ];
 
   return (
     <div className="w-full p-4 bg-gray-900 text-gray-100 min-h-[670px]">

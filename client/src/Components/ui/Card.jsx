@@ -1,6 +1,9 @@
-export const Card = ({ children, className }) => {
+export const Card = ({ children, className, onClick }) => {
   return (
-    <div className={`shadow-md rounded-lg p-4 ${className}`}>
+    <div
+      className={`shadow-md rounded-lg p-4 ${className}`}
+      onClick={onClick}
+    >
       {children}
     </div>
   );
