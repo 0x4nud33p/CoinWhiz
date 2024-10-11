@@ -47,6 +47,7 @@ const Market = () => {
 
   const handleCheckboxChange = (event, coin) => {
   event.stopPropagation();
+  console.log(coin);
   if (event.target.checked) {
     dispatch(addCoin(coin));
   }

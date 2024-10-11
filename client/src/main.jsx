@@ -37,3 +37,30 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>
 );
+
+
+// POST /api/db/addcoin
+// Content-Type: application/json
+
+// {
+//   "data": {
+//     "id": "btc",
+//     "coin": "Bitcoin",
+//     "current_price": 42000,
+//     "low_24h": 40000,
+//     "high_24h": 44000,
+//     "image": "https://example.com/bitcoin.png"
+//   },
+//   "userid": "648df6c2e7466e1f9d2e1f43"
+// }
+
+
+// POST /api/db/removecoin
+// Content-Type: application/json
+
+// {
+//   "data": {
+//     "id": "btc"
+//   },
+//   "userid": "648df6c2e7466e1f9d2e1f43"
+// }
