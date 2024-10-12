@@ -1,12 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
-
 const watchlistSchema = new Schema(
   {
-    id: {
-      type: String,
-      required: true,
-    },
     coin: {
       type: String,
       required: true,
@@ -37,6 +32,5 @@ const watchlistSchema = new Schema(
     timestamps: true,
   }
 );
-
 
 export const Watchlist = mongoose.model("Watchlist", watchlistSchema);

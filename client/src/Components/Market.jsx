@@ -46,12 +46,19 @@ const Market = () => {
   };
 
   const handleCheckboxChange = (event, coin) => {
-  event.stopPropagation();
-  console.log(coin);
-  if (event.target.checked) {
-    dispatch(addCoin(coin));
-  }
-};
+    event.stopPropagation();
+    if (event.target.checked) {
+      const coinData = {
+        id: coin.id,
+        coin: coin.name,
+        current_price: coin.current_price,
+        low_24h: coin.low_24h,
+        high_24h: coin.high_24h,
+        image: coin.image,
+      };
+      dispatch(addCoin(coinData));
+    }
+  };
 
 
   const handleCoinClick = (id) => {

@@ -1,9 +1,7 @@
-import Watchlist from "../models/watchlist.model.js";
-
+import {Watchlist} from "../models/watchlist.model.js";
 
 const addCoin = async (req, res) => {
   const { data, userid } = req.body;
-
 
   if (!data || !userid) {
     return res
@@ -13,7 +11,7 @@ const addCoin = async (req, res) => {
 
   try {
     const existingCoin = await Watchlist.findOne({
-      id: data.id,
+      coin: data.coin,
       owner: userid,
     });
 
@@ -36,7 +34,6 @@ const addCoin = async (req, res) => {
   }
 };
 
-
 const removeCoin = async (req, res) => {
   const { data, userid } = req.body;
 
@@ -48,7 +45,7 @@ const removeCoin = async (req, res) => {
 
   try {
     const coinToBeDeleted = await Watchlist.findOne({
-      id: data.id,
+      coin: data.coin,
       owner: userid,
     });
 
@@ -57,7 +54,6 @@ const removeCoin = async (req, res) => {
     }
 
     await Watchlist.deleteOne({ _id: coinToBeDeleted._id });
-
     return res.status(200).json({ message: "Coin deleted successfully" });
   } catch (error) {
     console.error("Error while deleting coin:", error.message);
