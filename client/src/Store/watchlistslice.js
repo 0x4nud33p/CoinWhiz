@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { createSlice } from "@reduxjs/toolkit";
 import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken.js";
 
 const notify = () => toast("Coin Already Exists in Watchlist!");
@@ -40,9 +40,9 @@ const watchlistSlice = createSlice({
       }
     },
     removeCoin: (state, action) => {
-      const idToRemove = action.payload;
-      state.coins = state.coins.filter((coin) => coin.id !== idToRemove);
-      removeCoinDB(idToRemove);
+      const coinToRemove = action.payload;
+      state.coins = state.coins.filter((coin) => coin.id !== coinToRemove.id);
+      removeCoinDB(coinToRemove);
     },
   },
 });
@@ -64,14 +64,21 @@ const addCoinDB = async (newCoin) => {
   }
 };
 
-const removeCoinDB = async (id) => {
+const removeCoinDB = async (coin) => {
   try {
     if (!userid) {
       toast.error("User Not Authorized");
       return;
     }
     await axios.post("http://localhost:5050/api/db/removecoin", {
-      data: { coin: id },
+      data: {
+        id: coin.id,
+        coin: coin.coin,
+        current_price: coin.current_price,
+        low_24h: coin.low_24h,
+        high_24h: coin.high_24h,
+        image: coin.image,
+      },
       userid: userid,
     });
     removed();

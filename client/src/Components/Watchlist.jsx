@@ -1,4 +1,3 @@
-// Watchlist Component
 import { useSelector, useDispatch } from "react-redux";
 import { addCoin, removeCoin } from "../Store/watchlistslice";
 import { Button } from "../Components/ui/Button";
@@ -22,9 +21,9 @@ export default function Watchlist() {
     }));
   };
 
-  const handleRemoveCoin = (id, event) => {
+  const handleRemoveCoin = (coin, event) => {
     event.stopPropagation(); 
-    dispatch(removeCoin(id));
+    dispatch(removeCoin(coin));
   };
 
   return (
@@ -75,7 +74,7 @@ export default function Watchlist() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={(event) => handleRemoveCoin(coin.id, event)}
+                  onClick={(event) => handleRemoveCoin(coin, event)}
                   aria-label={`Remove ${coin.coin} from watchlist`}
                 >
                   <XIcon className="h-5 w-5 md:h-6 md:w-6 text-red-400 transition-transform duration-200 hover:scale-110" />
@@ -89,7 +88,6 @@ export default function Watchlist() {
     </section>
   );
 }
-
 
 function XIcon(props) {
   return (
@@ -110,5 +108,3 @@ function XIcon(props) {
     </svg>
   );
 }
-
-
