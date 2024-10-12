@@ -54,7 +54,7 @@ const addCoinDB = async (newCoin) => {
       return;
     }
 
-    const response = await axios.post("http://localhost:5050/api/db/addcoin", {
+    const response = await axios.post(`${import.meta.env.BACKEND_URL}/api/db/addcoin`, {
       data: newCoin,
       userid: userid,
     });
@@ -79,7 +79,7 @@ const removeCoinDB = async (coin) => {
       toast.error("User Not Authorized");
       return;
     }
-    await axios.post("http://localhost:5050/api/db/removecoin", {
+    await axios.post(`${import.meta.env.BACKEND_URL}/api/db/removecoin`, {
       data: {
         id: coin.id,
         coin: coin.coin,

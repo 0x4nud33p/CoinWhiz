@@ -40,7 +40,7 @@ export default function Signup() {
 
       try {
         console.log(formData);
-        const response = await axios.post("http://localhost:5050/api/signup", {
+        const response = await axios.post(`${import.meta.env.BACKEND_URL}/api/signup`, {
           username: formData.fullname,
           email: formData.email,
           password: formData.password,
