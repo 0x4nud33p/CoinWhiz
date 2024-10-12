@@ -54,15 +54,24 @@ const addCoinDB = async (newCoin) => {
       return;
     }
 
-    await axios.post("http://localhost:5050/api/db/addcoin", {
+    const response = await axios.post("http://localhost:5050/api/db/addcoin", {
       data: newCoin,
       userid: userid,
     });
-    success();
+
+    if (response.status === 200) {
+      success();
+    }
   } catch (error) {
-    console.error("Error While Adding Coin to Watchlist:", error);
+    if (error.response && error.response.status === 409) {
+      toast.error("Coin already exists in the watchlist!");
+    } else {
+      console.error("Error While Adding Coin to Watchlist:", error);
+      toast.error("Error while adding coin to the watchlist.");
+    }
   }
 };
+
 
 const removeCoinDB = async (coin) => {
   try {
