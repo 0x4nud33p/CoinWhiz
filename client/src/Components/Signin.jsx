@@ -38,7 +38,7 @@ export default function Signin() {
 
       try {
         const response = await axios.post(
-          `${import.meta.env.BACKEND_URL}/api/signin`,
+          "/api/signin",
           {
             email: formData.email,
             password: formData.password,
