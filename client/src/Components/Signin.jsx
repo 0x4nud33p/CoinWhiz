@@ -13,6 +13,10 @@ export default function Signin() {
   const [formError, setFormError] = useState(null);
   const navigate = useNavigate();
 
+  const BASE_URL = import.meta.env.NODE_ENV === 'production'
+  ? 'https://coinwhiz.onrender.com'
+  : '';
+
   const validateForm = useCallback(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
@@ -38,7 +42,7 @@ export default function Signin() {
 
       try {
         const response = await axios.post(
-          "/api/signin",
+          `${BASE_URL}/api/signin`,
           {
             email: formData.email,
             password: formData.password,

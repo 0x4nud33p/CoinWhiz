@@ -10,6 +10,9 @@ const removed = () => toast.success("Coin Removed from Watchlist!");
 const initialState = {
   coins: [],
 };
+const BASE_URL = import.meta.env.NODE_ENV === 'production'
+  ? 'https://coinwhiz.onrender.com'
+  : '';
 
 const userInfo = getUserInfoFromToken(localStorage.getItem("token"));
 const userid = userInfo ? userInfo.id : null;
@@ -55,7 +58,7 @@ const addCoinDB = async (newCoin) => {
     }
 
     const response = await axios.post(
-      "/api/db/addcoin",
+      `${BASE_URL}/api/db/addcoin`,
       {
         data: newCoin,
         userid: userid,
@@ -82,7 +85,7 @@ const removeCoinDB = async (coin) => {
       toast.error("User Not Authorized");
       return;
     }
-    await axios.post("/api/db/removecoin", {
+    await axios.post(`${BASE_URL}/api/db/removecoin`, {
       data: {
         id: coin.id,
         coin: coin.coin,

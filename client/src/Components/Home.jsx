@@ -1,7 +1,6 @@
 import React from "react";
 import MyCarousel from "./MyCarousel";
 import { Link } from "react-router-dom";
-import { Footer } from "./Footer";
 
 export default function Home() {
   const token = localStorage.getItem('token');

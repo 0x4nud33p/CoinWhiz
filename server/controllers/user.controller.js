@@ -46,7 +46,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-const signin = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -84,4 +84,4 @@ const signin = async (req, res) => {
 };
 
 
-export { registerUser, signin };
+export { registerUser, login };

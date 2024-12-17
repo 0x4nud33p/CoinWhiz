@@ -11,6 +11,9 @@ export default function Signup() {
     email: "",
     password: "",
   });
+  const BASE_URL = import.meta.env.VITE_NODE_ENV === 'production'
+  ? 'https://coinwhiz.onrender.com'
+  : '';
   const [formError, setFormError] = useState(null);
   const navigate = useNavigate();
 
@@ -34,12 +37,11 @@ export default function Signup() {
       e.preventDefault();
       if (!validateForm()) return;
 
-      const loadingToast = toast.loading("Saving data...");
 
       setIsLoading(true);
 
       try {
-        const response = await axios.post("/api/signup", {
+        const response = await axios.post(`${BASE_URL}/api/signup`, {
           username: formData.fullname,
           email: formData.email,
           password: formData.password,
