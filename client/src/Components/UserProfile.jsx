@@ -1,10 +1,13 @@
 import { ArrowUpRight, ArrowDownRight, Star } from "lucide-react";
 import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken.js";
+import { useState } from "react";
 
 export default function UserProfile() {
   const token = localStorage.getItem("token");
+  const [userinfo,setUserInfo] = useState(null);
   if(token){
-    const userinfo = getUserInfoFromToken(token);
+    const user = getUserInfoFromToken(token);
+    setUserInfo(user);
   }
   
   return (

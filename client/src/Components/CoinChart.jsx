@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
-import { CryptoContext } from '../Api/CryptoContext';
 import { FaSpinner } from 'react-icons/fa'; 
 import { Chart, registerables } from 'chart.js';
 
@@ -29,9 +28,6 @@ const CoinChart = () => {
 
       const labels = prices.map(price => new Date(price[0]).toLocaleDateString());
       const data = prices.map(price => price[1]);
-      console.log(prices)
-      console.log(labels)
-      console.log(data)
 
       setChartData({
         labels,
