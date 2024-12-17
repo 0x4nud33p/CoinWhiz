@@ -3,7 +3,9 @@ import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken.js";
 
 export default function UserProfile() {
   const token = localStorage.getItem("token");
-  const userinfo = getUserInfoFromToken(token);
+  if(token){
+    const userinfo = getUserInfoFromToken(token);
+  }
   
   return (
     <div className="w-full p-4 bg-gray-900 text-gray-100 min-h-[670px]">

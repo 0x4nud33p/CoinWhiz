@@ -16,8 +16,7 @@ export const chartDays = [
 ];
 
 const CoinChart = () => {
-  const { id } = useParams(); 
-  const { crypto } = useContext(CryptoContext);
+  const { id } = useParams();
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [days, setDays] = useState(30);
@@ -30,6 +29,9 @@ const CoinChart = () => {
 
       const labels = prices.map(price => new Date(price[0]).toLocaleDateString());
       const data = prices.map(price => price[1]);
+      console.log(prices)
+      console.log(labels)
+      console.log(data)
 
       setChartData({
         labels,

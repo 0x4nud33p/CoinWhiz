@@ -3,19 +3,27 @@ import toast from "react-hot-toast";
 import { createSlice } from "@reduxjs/toolkit";
 import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken.js";
 
+
 const notify = () => toast("Coin Already Exists in Watchlist!");
 const success = () => toast.success("Coin Added to Watchlist!");
 const removed = () => toast.success("Coin Removed from Watchlist!");
 
+
+const BASE_URL =
+  import.meta.env.NODE_ENV === "production"
+    ? "https://coinwhiz.onrender.com"
+    : "http://localhost:3000";
+
+
+const token = localStorage.getItem("token");
+const userInfo = token ? getUserInfoFromToken(token) : null;
+const userid = userInfo ? userInfo.id : null;
+
+
 const initialState = {
   coins: [],
 };
-const BASE_URL = import.meta.env.NODE_ENV === 'production'
-  ? 'https://coinwhiz.onrender.com'
-  : '';
 
-const userInfo = getUserInfoFromToken(localStorage.getItem("token"));
-const userid = userInfo ? userInfo.id : null;
 
 const watchlistSlice = createSlice({
   name: "watchlist",
@@ -50,6 +58,7 @@ const watchlistSlice = createSlice({
   },
 });
 
+
 const addCoinDB = async (newCoin) => {
   try {
     if (!userid) {
@@ -57,13 +66,10 @@ const addCoinDB = async (newCoin) => {
       return;
     }
 
-    const response = await axios.post(
-      `${BASE_URL}/api/db/addcoin`,
-      {
-        data: newCoin,
-        userid: userid,
-      }
-    );
+    const response = await axios.post(`${BASE_URL}/api/db/addcoin`, {
+      data: newCoin,
+      userid,
+    });
 
     if (response.status === 200) {
       success();
@@ -85,6 +91,7 @@ const removeCoinDB = async (coin) => {
       toast.error("User Not Authorized");
       return;
     }
+
     await axios.post(`${BASE_URL}/api/db/removecoin`, {
       data: {
         id: coin.id,
@@ -94,13 +101,15 @@ const removeCoinDB = async (coin) => {
         high_24h: coin.high_24h,
         image: coin.image,
       },
-      userid: userid,
+      userid,
     });
     removed();
   } catch (error) {
     console.error("Error While Removing Coin from Watchlist:", error);
+    toast.error("Error while removing coin from the watchlist.");
   }
 };
+
 
 export const { addCoin, removeCoin } = watchlistSlice.actions;
 export default watchlistSlice.reducer;
