@@ -1,5 +1,5 @@
 import axios from "axios";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from "sonner";
 import { useState, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 

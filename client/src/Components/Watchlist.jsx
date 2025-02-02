@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCoin, removeCoin } from "../Store/watchlistslice";
 import { Button } from "../Components/ui/Button";
 import { Card, CardHeader, CardTitle } from "../Components/ui/Card";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 import { Link } from 'react-router-dom';
 import '../card.css';
 

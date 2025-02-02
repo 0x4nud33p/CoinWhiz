@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { CryptoContext } from '../Api/CryptoContext';
 import { addCoin } from '../Store/watchlistslice';
 import { useDispatch } from 'react-redux';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
 
