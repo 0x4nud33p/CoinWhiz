@@ -18,6 +18,13 @@ const Market = () => {
   const [filteredCrypto, setFilteredCrypto] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(!token){
+      navigate("/signin");
+    }
+  },[]);
+
+  useEffect(() => {
     if (crypto) {
       setFilteredCrypto(
         crypto.filter((coin) =>

@@ -1,115 +1,137 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { createSlice } from "@reduxjs/toolkit";
 import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken.js";
 
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-const notify = () => toast("Coin Already Exists in Watchlist!");
-const success = () => toast.success("Coin Added to Watchlist!");
-const removed = () => toast.success("Coin Removed from Watchlist!");
+export const addCoin = createAsyncThunk(
+  "watchlist/addCoin",
+  async (coinData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("User Not Authorized");
+        return rejectWithValue("User Not Authorized");
+      }
 
+      const userInfo = getUserInfoFromToken(token);
+      const response = await axios.post(`${BASE_URL}/api/db/addcoin`, {
+        ...coinData,
+        userId: userInfo.id,
+      });
 
-const BASE_URL =
-  import.meta.env.NODE_ENV === "production"
-    ? "https://coinwhiz.onrender.com"
-    : "http://localhost:3000";
+      toast.success("Coin Added to Watchlist!");
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 409) {
+        toast.error("Coin already exists in watchlist!");
+      } else {
+        toast.error("Error adding coin to watchlist");
+      }
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
+export const removeCoin = createAsyncThunk(
+  "watchlist/removeCoin",
+  async (coinId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("User Not Authorized");
+        return rejectWithValue("User Not Authorized");
+      }
 
-const token = localStorage.getItem("token");
-const userInfo = token ? getUserInfoFromToken(token) : null;
-const userid = userInfo ? userInfo.id : null;
+      const userInfo = getUserInfoFromToken(token);
+      const response = await axios.delete(`${BASE_URL}/api/db/removecoin`, {
+        data: { coinId, userId: userInfo.id },
+      });
 
+      toast.success("Coin Removed from Watchlist!");
+      return response.data;
+    } catch (error) {
+      toast.error("Error removing coin from watchlist");
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const fetchWatchlist = createAsyncThunk(
+  "watchlist/fetchWatchlist",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return rejectWithValue("User Not Authorized");
+      }
+
+      const userInfo = getUserInfoFromToken(token);
+      const response = await axios.get(`${BASE_URL}/api/db/watchlist`, {
+        params: { userId: userInfo.id },
+      });
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 const initialState = {
   coins: [],
+  loading: false,
+  error: null,
 };
-
 
 const watchlistSlice = createSlice({
   name: "watchlist",
   initialState,
-  reducers: {
-    addCoin: (state, action) => {
-      const { id, current_price, low_24h, high_24h, image } = action.payload;
-      const coinName =
-        action.payload.coin || id.charAt(0).toUpperCase() + id.slice(1);
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addCoin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addCoin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.coins.push(action.payload);
+      })
+      .addCase(addCoin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
-      const existingCoin = state.coins.find((coin) => coin.id === id);
-      if (existingCoin) {
-        notify();
-      } else {
-        const newCoin = {
-          id,
-          coin: coinName,
-          current_price,
-          low_24h,
-          high_24h,
-          image,
-        };
-        state.coins.push(newCoin);
-        addCoinDB(newCoin);
-      }
-    },
-    removeCoin: (state, action) => {
-      const coinToRemove = action.payload;
-      state.coins = state.coins.filter((coin) => coin.id !== coinToRemove.id);
-      removeCoinDB(coinToRemove);
-    },
+      .addCase(removeCoin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(removeCoin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.coins = state.coins.filter(
+          (coin) => coin.id !== action.payload.coinId
+        );
+      })
+      .addCase(removeCoin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(fetchWatchlist.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchWatchlist.fulfilled, (state, action) => {
+        state.loading = false;
+        state.coins = action.payload;
+      })
+      .addCase(fetchWatchlist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
-
-const addCoinDB = async (newCoin) => {
-  try {
-    if (!userid) {
-      toast.error("User Not Authorized");
-      return;
-    }
-
-    const response = await axios.post(`${BASE_URL}/api/db/addcoin`, {
-      data: newCoin,
-      userid,
-    });
-
-    if (response.status === 200) {
-      success();
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 409) {
-      toast.error("Coin already exists in the watchlist!");
-    } else {
-      console.error("Error While Adding Coin to Watchlist:", error);
-      toast.error("Error while adding coin to the watchlist.");
-    }
-  }
-};
-
-
-const removeCoinDB = async (coin) => {
-  try {
-    if (!userid) {
-      toast.error("User Not Authorized");
-      return;
-    }
-
-    await axios.post(`${BASE_URL}/api/db/removecoin`, {
-      data: {
-        id: coin.id,
-        coin: coin.coin,
-        current_price: coin.current_price,
-        low_24h: coin.low_24h,
-        high_24h: coin.high_24h,
-        image: coin.image,
-      },
-      userid,
-    });
-    removed();
-  } catch (error) {
-    console.error("Error While Removing Coin from Watchlist:", error);
-    toast.error("Error while removing coin from the watchlist.");
-  }
-};
-
-
-export const { addCoin, removeCoin } = watchlistSlice.actions;
 export default watchlistSlice.reducer;

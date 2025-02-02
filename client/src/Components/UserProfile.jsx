@@ -1,15 +1,22 @@
 import { ArrowUpRight, ArrowDownRight, Star } from "lucide-react";
 import { getUserInfoFromToken } from "../utilities/getUserInfoFromToken.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
   const token = localStorage.getItem("token");
-  const [userinfo,setUserInfo] = useState(null);
-  if(token){
-    const user = getUserInfoFromToken(token);
-    setUserInfo(user);
-  }
-  
+  const [userinfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      const user = getUserInfoFromToken(token);
+      setUserInfo(user);
+    } else {
+      navigate("/signin");
+    }
+  }, [token]);
+
   return (
     <div className="w-full p-4 bg-gray-900 text-gray-100 min-h-[670px]">
       <div className="w-full rounded-lg shadow-sm">
