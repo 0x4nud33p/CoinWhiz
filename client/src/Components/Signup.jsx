@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toast } from 'sonner';
@@ -6,170 +6,110 @@ import { Toaster, toast } from 'sonner';
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    fullname: "",
-    email: "",
-    password: "",
-  });
-  const BASE_URL = import.meta.env.VITE_NODE_ENV === 'production'
-  ? 'https://coinwhiz.onrender.com'
-  : '';
+  const [formData, setFormData] = useState({ fullname: "", email: "", password: "" });
   const [formError, setFormError] = useState(null);
+
+  const BASE_URL = import.meta.env.VITE_NODE_ENV === 'production' ? 'https://coinwhiz.onrender.com' : `${import.meta.env.VITE_API_URL}`;
   const navigate = useNavigate();
 
-  const validateForm = useCallback(() => {
+  useEffect(() => {
+    if (!formData.email) return;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setFormError("Please enter a valid email address");
-      return false;
-    }
-    setFormError(null);
-    return true;
+    setFormError(emailRegex.test(formData.email) ? null : "Please enter a valid email address");
   }, [formData.email]);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [id]: value }));
+    setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      if (!validateForm()) return;
+  const onSubmit = useCallback(async (e) => {
+    e.preventDefault();
+    if (formError) return;
 
+    setIsLoading(true);
+    try {
+      const { data, status } = await axios.post(`${BASE_URL}/api/auth/signup`, {
+        username: formData.fullname,
+        email: formData.email,
+        password: formData.password,
+      });
 
-      setIsLoading(true);
-
-      try {
-        const response = await axios.post(`${BASE_URL}/api/signup`, {
-          username: formData.fullname,
-          email: formData.email,
-          password: formData.password,
-        });
-
-        if (response.status === 201) {
-          toast.success("Signup successful! Please Login");
-          setFormError(null);
-          navigate('/signin'); 
-        }
-      } catch (error) {
-        console.error("Signup error:", error);
-        setFormError("An error occurred during signup. Please try again.");
-        toast.error("Signup failed. Please try again.");
-      } finally {
-        toast.dismiss(loadingToast);
-        setIsLoading(false);
+      if (status === 201) {
+        toast.success("Signup successful! Please Login");
+        navigate('/signin');
       }
-    },
-    [formData, validateForm, navigate]
-  );
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Signup failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [formData, formError, navigate]);
 
-  const buttonClasses = useMemo(
-    () =>
-      `w-full py-2 px-4 font-medium text-white rounded ${
-        isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600"
-      }`,
+  const buttonClasses = useMemo(() => 
+    `w-full py-2 px-4 font-medium text-white rounded ${isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600"}`, 
     [isLoading]
   );
 
   return (
-    <div className="bg-gray-900 text-gray-200 min-h-[670px]">
+    <div className="bg-gray-900 text-gray-200 min-h-screen flex justify-center items-center">
       <Toaster />
-      <div className="mx-auto max-w-[350px] space-y-6 p-4">
-        <div className="space-y-2 text-center">
+      <div className="max-w-sm w-full space-y-6 p-4 bg-gray-800 shadow-lg rounded-lg">
+        <div className="text-center">
           <h1 className="text-3xl font-bold">Sign Up</h1>
-          <p className="text-gray-600">
-            Already a User?{" "}
-            <Link to="/signin" className="text-blue-500">
-              Sign In
-            </Link>
+          <p className="text-gray-400">Already a User? 
+            <Link to="/signin" className="text-blue-500 ml-1">Sign In For Testing</Link>
           </p>
         </div>
-        <form onSubmit={onSubmit}>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="fullname" className="block font-medium">
-                Full Name
-              </label>
+
+        <form onSubmit={onSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="fullname" className="block font-medium">Full Name</label>
+            <input
+              id="fullname"
+              type="text"
+              placeholder="Enter Fullname"
+              required
+              value={formData.fullname}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border text-black border-gray-300 rounded"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="block font-medium">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter Email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-3 py-2 text-black border border-gray-300 rounded"
+            />
+            {formError && <p className="text-red-500 text-sm mt-1">{formError}</p>}
+          </div>
+          <div>
+            <label htmlFor="password" className="block font-medium">Password</label>
+            <div className="relative">
               <input
-                id="fullname"
-                type="text"
-                placeholder="Enter Fullname"
+                id="password"
+                type={showPassword ? "text" : "password"}
                 required
-                value={formData.fullname}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border text-black border-gray-300 rounded"
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="email" className="block font-medium">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                placeholder="Enter Email"
-                required
-                value={formData.email}
+                value={formData.password}
                 onChange={handleChange}
                 className="w-full px-3 py-2 text-black border border-gray-300 rounded"
               />
-              {formError && <p className="text-red-500 text-sm">{formError}</p>}
+              <button
+                type="button"
+                onClick={() => setShowPassword(prev => !prev)}
+                className="absolute right-3 top-2 text-sm text-gray-600"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
             </div>
-            <div className="space-y-2">
-              <label htmlFor="password" className="block font-medium">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 text-black border border-gray-300 rounded"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-2 text-sm text-gray-600"
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
-              </div>
-            </div>
-            <button
-              className={buttonClasses}
-              type="submit"
-              disabled={isLoading}
-              aria-busy={isLoading}
-            >
-              {isLoading ? (
-                <svg
-                  className="animate-spin mr-2 h-4 w-4 text-white inline"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8z"
-                  ></path>
-                </svg>
-              ) : (
-                "Sign Up"
-              )}
-            </button>
           </div>
+          <button className={buttonClasses} type="submit" disabled={isLoading} aria-busy={isLoading}>
+            {isLoading ? "Signing Up..." : "Sign Up"}
+          </button>
         </form>
       </div>
     </div>

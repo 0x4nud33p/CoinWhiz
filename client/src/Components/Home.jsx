@@ -6,7 +6,7 @@ export default function Home() {
   const token = localStorage.getItem('token');
 
   return (
-    <div className="bg-gray-900 text-gray-100 min-h-screen flex flex-col justify-between">
+    <div className="bg-gray-900 text-gray-100 min-h-screen flex flex-col justify-between font-space-grotesk">
       <main className="container mx-auto px-4 py-8 flex-grow">
         <section className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -29,13 +29,21 @@ export default function Home() {
           <p className="text-gray-400 mb-8">
             Join CoinWhiz today and start your cryptocurrency journey!
           </p>
-          {!token && (
-            <Link to="/signup">
+          {
+            token ? (
+              <Link to="/market">
               <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white">
-                Sign Up Now
+                Explore Coins
               </button>
             </Link>
-          )}
+            ) : (
+              <Link to="/signup">
+              <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white">
+                Get Started
+              </button>
+            </Link>
+            )
+          }
         </section>
       </main>
     </div>

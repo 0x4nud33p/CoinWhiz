@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from 'cors';
+import cors from "cors";
 import connectDB from "./db/index.js";
 import userroutes from "./routes/user.routes.js";
 
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.send("Server Started...");
 });
 
-app.use("/api",userroutes);
+app.use("/api", userroutes);
 
 app.listen(port, () => {
   console.log(`App is listening on port: http://localhost:${port}`);
